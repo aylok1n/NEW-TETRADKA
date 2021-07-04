@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {ScrollView,Text} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Feather';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import Books from '../Components/Books';
-import SectionTittle from '../Components/SectionTittle'
+import Books from '../Components/books';
+import SectionTittle from '../Components/SectionTittle.js'
 import { useIsFocused } from '@react-navigation/native'
 
 
@@ -65,7 +65,7 @@ function HomeScreen({route,navigation }) {
       <PlusButton 
         onPress={() => navigation.navigate('AddBookScreen')} 
         style ={{shadowColor: "#000",shadowOffset: {width: 0,height: 4,},shadowOpacity: 0.5,shadowRadius: 2.5,elevation: 5,}}>
-        <Ionicons name="ios-add" size={36} color="white" />
+        <Icon name="folder-plus" size={36} color="white" />
       </PlusButton>
     </Container> 
   );

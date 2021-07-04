@@ -3,10 +3,9 @@ import {StyleSheet, View, Button,  SafeAreaView, TextInput, Alert  } from 'react
 import styled from 'styled-components/native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
-function AddBookScreen({route, navigation}) {
+export default function AddBookScreen({route, navigation}) {
   const { getItem, setItem } = useAsyncStorage('books');
   const [text, onChangeText] = React.useState('');
-  // const { arr, add } = route.params;
   const Options = React.useState(0);
 
   React.useLayoutEffect(() => {
@@ -28,11 +27,10 @@ function AddBookScreen({route, navigation}) {
     setItem(JSON.stringify(arr));
     console.log(arr)
     navigation.navigate("HomeScreen")
-    // setTimeout(navigation.navigate("HomeScreen"), 1000)
   }
 
   return (
-    <View>
+    <View style={styles.view}>
       <SafeAreaView>
         <TextInput
           style={styles.input}
@@ -63,6 +61,11 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
   },
+  view : {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 const BookName  = styled.Text `
@@ -105,4 +108,3 @@ const FullName = styled.Text`
     margin: auto
     padding: 30px
 `;
-export default AddBookScreen;

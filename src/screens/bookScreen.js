@@ -1,9 +1,8 @@
 import React from 'react';
 import {ScrollView, Button } from 'react-native';
 import styled from 'styled-components/native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import PageItem from '../Components/PageItem'
-import CreatePDF from '../Components/CreatePDF'
+// import { MaterialCommunityIcons } from '@expo/vector-icons';
+import PageItem from '../Components/PageItem.js'
 
 function BookScreen({route, navigation}) {
   const {itemId, itemName, itemPages} = route.params;
@@ -16,7 +15,7 @@ function BookScreen({route, navigation}) {
       title: '',
       headerRight: () => (
         <Del  onPress={() => alert('Вот собственно, осталось только перегнать это все в пдф')} >
-          <MaterialCommunityIcons name="pdf-box" size={30} color="black" />
+          {/* <MaterialCommunityIcons name="pdf-box" size={30} color="black" /> */}
         </Del>
       ),
     });
@@ -42,7 +41,7 @@ function BookScreen({route, navigation}) {
             Pages: itemPages,
           })} 
           style ={{shadowColor: "#000",shadowOffset: {width: 0,height: 4,},shadowOpacity: 1.5,shadowRadius: 2.5,elevation: 10,}}>
-          <MaterialCommunityIcons name="pencil-outline" size={30} color="white" />
+          {/* <MaterialCommunityIcons name="pencil-outline" size={30} color="white" /> */}
         </PencilButton>
       </Container>
       )
@@ -57,7 +56,7 @@ function BookScreen({route, navigation}) {
               Pages: itemPages,
             })} 
           style ={{shadowColor: "#000",shadowOffset: {width: 0,height: 4,},shadowOpacity: 1.5,shadowRadius: 2.5,elevation: 10,}}>
-          <MaterialCommunityIcons name="pencil-outline" size={24} color="black" />
+          {/* <MaterialCommunityIcons name="pencil-outline" size={24} color="black" /> */}
         </PencilButton>
         <ScrollView style={{marginEnd:10}}>
         <FullName>{itemName}</FullName>

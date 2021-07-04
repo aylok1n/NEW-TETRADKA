@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Button,View, Platform,} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+// import * as ImagePicker from 'expo-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import styled from 'styled-components/native';
 
@@ -33,13 +34,12 @@ function AddPageScreen({route, navigation}) {
   }, []);
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    let result = await launchImageLibrary({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 5],
       quality: 1,
     });
-
     console.log(result);
     if (!result.cancelled) {
       setImage(result.uri);
@@ -77,6 +77,7 @@ function AddPageScreen({route, navigation}) {
     </View>
   );
 }
+
 const AddBookScreen = styled.TouchableOpacity`
 alignItems: center;
 justifyContent: center;

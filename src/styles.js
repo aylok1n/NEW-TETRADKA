@@ -1,5 +1,9 @@
 import {StyleSheet} from 'react-native';
+
 const styles = StyleSheet.create({
+    App: {
+      backgroundColor: "blue"
+    },
     sectionContainer: {
       marginTop: 32,
       paddingHorizontal: 24,
@@ -17,4 +21,5 @@ const styles = StyleSheet.create({
       fontWeight: '700',
     },
   });
+  
 export default styles
