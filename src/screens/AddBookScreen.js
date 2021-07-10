@@ -1,19 +1,13 @@
 import React from 'react';
-import {StyleSheet, View, Button,  SafeAreaView, TextInput, Alert  } from 'react-native';
+import {View, SafeAreaView, TextInput, ImageBackground,TouchableOpacity,Text} from 'react-native';
 import styled from 'styled-components/native';
+import styles from '../styles.js';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 export default function AddBookScreen({route, navigation}) {
   const { getItem, setItem } = useAsyncStorage('books');
   const [text, onChangeText] = React.useState('');
   const Options = React.useState(0);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTransparent: false,
-      title: 'Добавить книгу',
-    });
-  }, [navigation, Options]);
 
   const AddBook = async (text) => {
     const item = await getItem()
@@ -30,43 +24,37 @@ export default function AddBookScreen({route, navigation}) {
   }
 
   return (
-    <View style={styles.view}>
-      <SafeAreaView>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeText}
-          value={text}
-          placeholder="Введите название книги"
-        />
-      </SafeAreaView>
+    <Container>
+      <ImageBackground source={require(`../img/background.jpg`)} resizeMode='cover' style={styles.image}>
+        <View style={styles.viewAddBook}>
+          <SafeAreaView>
+            <TextInput
+              style={styles.inputAddBook}
+              onChangeText={onChangeText}
+              value={text}
+              placeholder="Введите название книги"
+              placeholderTextColor="#FFFFFF"
+            />
+          </SafeAreaView>
 
-      <Button 
-        onPress={() => { 
-          if (text != '') {
-            AddBook(text) 
-            // alert(text + " добавлена")
+          <TouchableOpacity
+            style={styles.buttonAddBook}
+            onPress={() => { 
+              if (text != '') {
+                AddBook(text) 
+                // alert(text + " добавлена")
 
-          }
-          else alert("Введите название книги")
-        }}
-        title= "Добавить"
-      />
-    </View>
+              }
+              else alert("Введите название книги")
+            }}>
+            <Text style={styles.buttonAddBookText}>Добавить</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    </Container>
   )
 }
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-  },
-  view : {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-});
 
 const BookName  = styled.Text `
   font-Weight: 800;
@@ -75,8 +63,11 @@ const BookName  = styled.Text `
 `;
 
 const Container = styled.View`
-  flex: 1; 
-  align-items: center;
+    position: relative; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
 `;
 
 const EmptyText = styled.Text`
