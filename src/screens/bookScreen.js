@@ -5,11 +5,14 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import PageItem from '../Components/PageItem.js'
 import ImageView from 'react-native-image-view';
-
+import Dots from 'react-native-vector-icons/Entypo';
 function BookScreen({route, navigation}) {
     // itemPages
   const {itemId, itemName, } = route.params;
   const Options = React.useState(0);
+  const [isVisible, setIsVisible] = React.useState(false)
+  const [pageNumber, setPageNumber] = React.useState(0)
+  const [isVisibleHeader, setIsVisibleHeader] = React.useState(true)
 
   let itemPages = [
     "https://sun9-72.userapi.com/impg/UqE_3-N4liLHPJOTuL8FBLTQijHmU98PHGWA-g/svxHMhNREQM.jpg?size=1080x1440&quality=96&sign=634b2b439b12a20b7994a52c8bc8f82b&type=album",
@@ -24,10 +27,11 @@ function BookScreen({route, navigation}) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTransparent: true,
+      headerShown: isVisibleHeader,
       title: '',
       headerRight: () => (
         <Del  onPress={() => alert('Вот собственно, осталось только перегнать это все в пдф')} >
-          {/* <MaterialCommunityIcons name="pdf-box" size={30} color="black" /> */}
+          <Dots name="dots-three-vertical" size={25} color="black" />
         </Del>
       ),
     });
@@ -37,8 +41,6 @@ function BookScreen({route, navigation}) {
   itemPages.map((uri) => images.push({
     source: {uri : uri},
   }))
- const [isVisible, setIsVisible] = React.useState(false)
- const [pageNumber, setPageNumber] = React.useState(0)
   if(itemPages != 0){
     return (
       <Container >
@@ -51,18 +53,21 @@ function BookScreen({route, navigation}) {
                 controls={{next: true, prev: true, close : false}}
                 onClose={() => {setIsVisible(false)}}
                 />
-            <ScrollView style={styled.scrollView}>
-            <FullName numberOfLines={1} ellipsizeMode='tail' >{itemName}</FullName>
-            
-            {itemPages.map((page, id,) => <View>
-            <TouchableOpacity activeOpacity={0.85} onPress={() => {
-                setIsVisible(true)
-                setPageNumber(id)
-            }}>
-                <PageItem key={id} source={{uri: page}}/> 
-            </TouchableOpacity>
-            </View>
-            )}
+            <ScrollView
+              onScrollAnimationEnd={() => console.log('dsfsdf')}
+              onScroll={() => setIsVisibleHeader(true)}
+              style={styled.scrollView}>
+              <FullName numberOfLines={1} ellipsizeMode='tail' >
+                {itemName}
+              </FullName>
+              {itemPages.map((page, id,) => <View>
+                <TouchableOpacity activeOpacity={0.85} onPress={() => {
+                    setIsVisible(true)
+                    setPageNumber(id)
+                }}>
+                    <PageItem key={id} source={{uri: page}}/> 
+                </TouchableOpacity>
+            </View>)}
             </ScrollView>
             <PencilButton 
                 onPress={() => navigation.navigate('AddPageScreen', {
@@ -77,7 +82,6 @@ function BookScreen({route, navigation}) {
       </Container>
       )
   }
-  //переписать элсе
   else {
     return (
       <Container>
@@ -100,7 +104,6 @@ function BookScreen({route, navigation}) {
     )
   }
 }
-
 
 const BookName  = styled.Text `
     font-Weight: 800;

@@ -19,7 +19,7 @@ function Books({id, fullname, pages} ) {
           <Icon name="book-open" size={60} color="white">
           </Icon>
             <TextAvatar>
-              {textAvatar[0][0].toUpperCase() }   {textAvatar[1] ? textAvatar[1][0].toUpperCase() : '   '}
+              {textAvatar[0][0].toUpperCase() }   {textAvatar[1] ? textAvatar[1][0] : '   '}
             </TextAvatar> 
         </Avatar>
         <FullName>{fullname}</FullName>
