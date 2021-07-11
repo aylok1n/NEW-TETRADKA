@@ -1,14 +1,14 @@
 import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
 
-let width = Dimensions.get('window').width
-let height =  Dimensions.get('window').height
+let width = Dimensions.get('window').width * 0.9
+let height =  Dimensions.get('window').height * 0.6
 
 const PageItem = styled.Image`
 
 justify-content: center;
-width: ${width * 0.9};
-height: ${height * 0.6};
+width: ${Math.round(width)}px;
+height: ${Math.round(height)}px;
 borderBottomWidth: 3px ;
 borderColor: #E0FFFF;
 margin: 15px auto;

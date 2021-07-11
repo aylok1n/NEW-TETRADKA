@@ -5,7 +5,7 @@ import {Text} from 'react-native';
 import styles from './styles.js';
 
 import HomeScreen from './screens/HomeScreen.js'
-import BookScreen from './screens/bookScreen.js'
+import BookScreen from './screens/BookScreen.js'
 import AddBookScreen from './screens/AddBookScreen.js'
 import AddPageScreen from './screens/AddPageScreen.js';
 

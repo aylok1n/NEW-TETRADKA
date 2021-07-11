@@ -5,7 +5,12 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import PageItem from '../Components/PageItem.js'
 import ImageView from 'react-native-image-view';
+import PopUpMenu from '../Components/PopUpMenu.js';
+import { MenuProvider } from 'react-native-popup-menu';
 import Dots from 'react-native-vector-icons/Entypo';
+
+
+
 function BookScreen({route, navigation}) {
     // itemPages
   const {itemId, itemName, } = route.params;
@@ -29,11 +34,6 @@ function BookScreen({route, navigation}) {
       headerTransparent: true,
       headerShown: isVisibleHeader,
       title: '',
-      headerRight: () => (
-        <Del  onPress={() => alert('Вот собственно, осталось только перегнать это все в пдф')} >
-          <Dots name="dots-three-vertical" size={25} color="black" />
-        </Del>
-      ),
     });
   }, [navigation, Options]);
 
@@ -43,42 +43,47 @@ function BookScreen({route, navigation}) {
   }))
   if(itemPages != 0){
     return (
-      <Container >
-        <ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
-            <ImageView
-                images={images}
-                animationType={'slide'}
-                imageIndex={pageNumber}
-                isVisible={isVisible}
-                controls={{next: true, prev: true, close : false}}
-                onClose={() => {setIsVisible(false)}}
-                />
-            <ScrollView
-              onScrollAnimationEnd={() => console.log('dsfsdf')}
-              onScroll={() => setIsVisibleHeader(true)}
-              style={styled.scrollView}>
-              <FullName numberOfLines={1} ellipsizeMode='tail' >
-                {itemName}
-              </FullName>
-              {itemPages.map((page, id,) => <View>
-                <TouchableOpacity activeOpacity={0.85} onPress={() => {
-                    setIsVisible(true)
-                    setPageNumber(id)
-                }}>
-                    <PageItem key={id} source={{uri: page}}/> 
-                </TouchableOpacity>
-            </View>)}
-            </ScrollView>
-            <PencilButton 
-                onPress={() => navigation.navigate('AddPageScreen', {
-                    Id: itemId,
-                    Name: itemName,
-                    Pages: itemPages,
-                })} 
-                style ={{shadowColor: "#000",elevation: 10}}>
-                <Icon name="pencil" size={30} color="white" />
-            </PencilButton>
-        </ImageBackground>
+      <Container>
+		<MenuProvider>
+		
+			<ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
+				<ImageView
+					images={images}
+					animationType={'slide'}
+					imageIndex={pageNumber}
+					isVisible={isVisible}
+					controls={{close: false ,next: false, prev: false}}
+					onClose={() => {setIsVisible(false)}}
+					onScroll={{ useNativeDriver: true }}
+				/>
+				<PopUpMenu/>
+				<ScrollView
+				onScrollAnimationEnd={() => console.log('dsfsdf')}
+				onScroll={() => setIsVisibleHeader(true)}
+				style={styled.scrollView}>
+				<FullName numberOfLines={1} ellipsizeMode='tail' >
+					{itemName}
+				</FullName>
+				{itemPages.map((page, id,) => <View  key={id}>
+					<TouchableOpacity activeOpacity={0.95} onPress={() => {
+						setIsVisible(true)
+						setPageNumber(id)
+					}}>
+						<PageItem source={{uri: page}}/> 
+					</TouchableOpacity>
+				</View>)}
+				</ScrollView>
+				<PencilButton 
+					onPress={() => navigation.navigate('AddPageScreen', {
+						Id: itemId,
+						Name: itemName,
+						Pages: itemPages,
+					})} 
+					style ={{shadowColor: "#000",elevation: 10}}>
+					<Icon name="pencil" size={30} color="white" />
+				</PencilButton>
+        	</ImageBackground>
+		</MenuProvider>
       </Container>
       )
   }
@@ -105,12 +110,14 @@ function BookScreen({route, navigation}) {
   }
 }
 
+
+
 const BookName  = styled.Text `
     font-Weight: 800;
     font-size: 28px;
     line-height: 30px;
 `;
-const Del = styled.TouchableOpacity`
+const HeaderPopUp = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
     right:15px;
@@ -119,6 +126,7 @@ const Container = styled.View`
     flex: 1; 
     align-items: center;
     height: 100%
+	width: 100%
 `;
 
 const EmptyText = styled.Text`
