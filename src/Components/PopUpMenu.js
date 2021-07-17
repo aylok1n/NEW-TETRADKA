@@ -12,10 +12,8 @@ const PopUpMenu = () => (
                 {/* <Dots style={{zIndex: -9991}} name="dots-three-vertical" size={25} color="black"/> */}
             </MenuTrigger>
             <MenuOptions customStyles={optionsStyles}>
-                <ImageBackground source={require('./Screenshot_11.png')} resizeMode="stretch" style={{width:width}}>
-                <MenuOption onSelect={() => alert(`Save`)} text='Save' />
+                <MenuOption onSelect={() => alert(`Save`)} text='Save'/>
                 <MenuOption onSelect={() => alert(`Delete`)} text='Delete'/>
-                </ImageBackground>
             </MenuOptions>
       </Menu>
     </Container>
@@ -32,26 +30,24 @@ const Container = styled.View`
 `;
 
 const triggerStyles = {
-    triggerWrapper: {
-      padding: 30,
-      paddingBottom: 0,
-      paddingLeft: 10,
-      marginTop: -30,
-      zIndex: 909999999,
-    },
     triggerText: {
         color: 'black',
         fontSize: 35,
         fontWeight: 'bold',
         letterSpacing: -1.9,
-        transform: [{ rotateZ: '-90deg'}]
-      },
+        transform: [{ rotateZ: '-90deg'}],
+        padding: 30,
+        paddingBottom: 20,
+        paddingLeft: 30,
+        marginTop: -20,
+        zIndex: 999,
+        borderRadius: 50,
+    },
     TriggerTouchableComponent: TouchableOpacity,
 };
 
 const optionsStyles = {
     optionsContainer: {
-    //   padding: 15,
       alignItems: 'center',
       borderTopStartRadius: 40,
       borderTopEndRadius: 40,
@@ -63,11 +59,7 @@ const optionsStyles = {
         borderRadius: 40,
     },
     optionWrapper: {
-      margin: 10,
-      borderRadius: 40,
-    },
-    optionTouchable: {
-      activeOpacity: 70,
+        margin: 12,
     },
     optionText: {
       color: '#1E90FF',

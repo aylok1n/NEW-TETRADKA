@@ -12,22 +12,22 @@ import Dots from 'react-native-vector-icons/Entypo';
 
 
 function BookScreen({route, navigation}) {
-    // itemPages
-  const {itemId, itemName, } = route.params;
+    // 
+  const {itemId, itemName, itemPages} = route.params;
   const Options = React.useState(0);
   const [isVisible, setIsVisible] = React.useState(false)
   const [pageNumber, setPageNumber] = React.useState(0)
   const [isVisibleHeader, setIsVisibleHeader] = React.useState(true)
 
-  let itemPages = [
-    "https://sun9-72.userapi.com/impg/UqE_3-N4liLHPJOTuL8FBLTQijHmU98PHGWA-g/svxHMhNREQM.jpg?size=1080x1440&quality=96&sign=634b2b439b12a20b7994a52c8bc8f82b&type=album",
-    "https://sun9-8.userapi.com/impg/E9SZwKct28lZXRsaOGdHbfbJIBizPBEgOaTaug/lB5hh6wHcNE.jpg?size=810x1080&quality=96&sign=3a05007eef766b1ca1a3e7789d44eb12&type=album",
-    "https://source.unsplash.com/user/erondu/1000x1200",
-    "https://sun9-67.userapi.com/impg/C8lu90GGEpBvjsccdEZ79fGCNzpQCLVcnLUJRA/gi_sb_WPglw.jpg?size=810x1080&quality=96&sign=c8e4fdd54edf5d5f44624f0f1f61c11c&type=album",
-    "https://sun9-57.userapi.com/impg/rVtafKKEOcymykLWo66_hC7aE0T9Fqa7oNlyxg/jCPsfWt_Y4Q.jpg?size=810x1080&quality=96&sign=762457809e0bee29d6094a5638ec66e0&type=album",
-    "https://sun9-36.userapi.com/impg/efvc3SghYComccAGjev0oz-8s8I476dmzGz5rw/nN6xmTGJpYM.jpg?size=1200x1600&quality=96&sign=55f5791498244b30608171363ab0a3ba&type=album",
-    "https://sun9-59.userapi.com/impg/NKdGicqK3kPl_h4Kf5gV3IjzB5sc1rLSOdb5Gw/qbTRqF3R2iQ.jpg?size=1920x1920&quality=96&sign=ac86a23fcf1f593f726ece3eaa34fc3b&type=album"
-  ]
+  // let itemPages = [
+  //   "https://sun9-72.userapi.com/impg/UqE_3-N4liLHPJOTuL8FBLTQijHmU98PHGWA-g/svxHMhNREQM.jpg?size=1080x1440&quality=96&sign=634b2b439b12a20b7994a52c8bc8f82b&type=album",
+  //   "https://sun9-8.userapi.com/impg/E9SZwKct28lZXRsaOGdHbfbJIBizPBEgOaTaug/lB5hh6wHcNE.jpg?size=810x1080&quality=96&sign=3a05007eef766b1ca1a3e7789d44eb12&type=album",
+  //   "https://source.unsplash.com/user/erondu/1000x1200",
+  //   "https://sun9-67.userapi.com/impg/C8lu90GGEpBvjsccdEZ79fGCNzpQCLVcnLUJRA/gi_sb_WPglw.jpg?size=810x1080&quality=96&sign=c8e4fdd54edf5d5f44624f0f1f61c11c&type=album",
+  //   "https://sun9-57.userapi.com/impg/rVtafKKEOcymykLWo66_hC7aE0T9Fqa7oNlyxg/jCPsfWt_Y4Q.jpg?size=810x1080&quality=96&sign=762457809e0bee29d6094a5638ec66e0&type=album",
+  //   "https://sun9-36.userapi.com/impg/efvc3SghYComccAGjev0oz-8s8I476dmzGz5rw/nN6xmTGJpYM.jpg?size=1200x1600&quality=96&sign=55f5791498244b30608171363ab0a3ba&type=album",
+  //   "https://sun9-59.userapi.com/impg/NKdGicqK3kPl_h4Kf5gV3IjzB5sc1rLSOdb5Gw/qbTRqF3R2iQ.jpg?size=1920x1920&quality=96&sign=ac86a23fcf1f593f726ece3eaa34fc3b&type=album"
+  // ]
   
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,8 +44,6 @@ function BookScreen({route, navigation}) {
   if(itemPages != 0){
     return (
       <Container>
-		<MenuProvider>
-		
 			<ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
 				<ImageView
 					images={images}
@@ -58,21 +56,22 @@ function BookScreen({route, navigation}) {
 				/>
 				<PopUpMenu/>
 				<ScrollView
-				onScrollAnimationEnd={() => console.log('dsfsdf')}
-				onScroll={() => setIsVisibleHeader(true)}
-				style={styled.scrollView}>
-				<FullName numberOfLines={1} ellipsizeMode='tail' >
-					{itemName}
-				</FullName>
-				{itemPages.map((page, id,) => <View  key={id}>
-					<TouchableOpacity activeOpacity={0.95} onPress={() => {
-						setIsVisible(true)
-						setPageNumber(id)
-					}}>
+                    onScrollAnimationEnd={() => console.log('dsfsdf')}
+                    onScroll={() => setIsVisibleHeader(true)}
+                    style={styled.scrollView}>
+                    <FullName numberOfLines={1} ellipsizeMode='tail' >
+                        {itemName}
+                    </FullName>
+				    {itemPages.map((page, id,) => <View  key={id}>
+                        <TouchableOpacity activeOpacity={0.95} onPress={() => {
+                            setIsVisible(true)
+                            setPageNumber(id)
+                        }}>
 						<PageItem source={{uri: page}}/> 
-					</TouchableOpacity>
-				</View>)}
+					    </TouchableOpacity>
+				    </View>)}
 				</ScrollView>
+
 				<PencilButton 
 					onPress={() => navigation.navigate('AddPageScreen', {
 						Id: itemId,
@@ -83,7 +82,6 @@ function BookScreen({route, navigation}) {
 					<Icon name="pencil" size={30} color="white" />
 				</PencilButton>
         	</ImageBackground>
-		</MenuProvider>
       </Container>
       )
   }
@@ -103,7 +101,7 @@ function BookScreen({route, navigation}) {
                 <View>
                     <FullName numberOfLines={1} ellipsizeMode='tail' >{itemName}</FullName>
                 </View>
-                <EmptyText >Добавьте изображение</EmptyText>
+                <EmptyText>Добавьте изображение</EmptyText>
             </ImageBackground>
       </Container>
     )

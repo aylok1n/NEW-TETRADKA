@@ -8,11 +8,13 @@ import HomeScreen from './screens/HomeScreen.js'
 import BookScreen from './screens/BookScreen.js'
 import AddBookScreen from './screens/AddBookScreen.js'
 import AddPageScreen from './screens/AddPageScreen.js';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
+    <MenuProvider>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -62,6 +64,7 @@ function App() {
       </Stack.Navigator>
       
     </NavigationContainer>
+    </MenuProvider>
   );
 }
 export default App;
