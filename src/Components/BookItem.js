@@ -2,28 +2,32 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useSelector, useDispatch } from 'react-redux'
+import { setCurrenId } from '../redux/booksSlice'
 
-function Books({id, fullname, pages} ) {
-  const navigation = useNavigation();
-  let textAvatar = fullname.split(' ')
-  console.log(textAvatar)
-    return (
-      <BookItem key ={id} onPress={() =>  
+const BookItem = ({id, fullname, pages}) => {
+  	const navigation = useNavigation();
+  	const dispatch = useDispatch()
+	const openBook = () => {
+        dispatch(setCurrenId(id))
         navigation.navigate('BookScreen', {
-          itemId: id,
-          itemName: fullname,
-          itemPages: pages,
+        id: id,
+        fullname: fullname,
+        pages: pages,
         })
-      }>
-        <Avatar>        
-          <Icon name="book-open" size={60} color="white">
-          </Icon>
-            <TextAvatar>
-              {textAvatar[0][0].toUpperCase() }   {textAvatar[1] ? textAvatar[1][0] : '   '}
-            </TextAvatar> 
-        </Avatar>
-        <FullName>{fullname}</FullName>
-      </BookItem>
+    }
+  	let textAvatar = fullname.split(' ')
+	return (
+		<Container onPress={openBook}>
+			<Avatar>        
+			<Icon name="book-open" size={60} color="white">
+			</Icon>
+				<TextAvatar>
+				{textAvatar[0][0].toUpperCase() }   {textAvatar[1] ? textAvatar[1][0] : '   '}
+				</TextAvatar> 
+			</Avatar>
+			<FullName>{fullname}</FullName>
+		</Container>
     )
 };
 
@@ -55,7 +59,7 @@ const Avatar = styled.View`
   justify-content: center;
 `;
 
-const BookItem = styled.TouchableOpacity`
+const Container = styled.TouchableOpacity`
   align-items: center;
   flex-direction: row;
   borderRadius: 20px;
@@ -66,7 +70,7 @@ const BookItem = styled.TouchableOpacity`
   width: 90%
 `;
 
-export default Books
+export default BookItem
 
 
 

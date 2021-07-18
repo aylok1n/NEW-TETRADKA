@@ -1,107 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import {Button,View, Platform,} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import styled from 'styled-components/native';
-
+import { useSelector, useDispatch } from 'react-redux'
+import {setBooks, addPage } from '../redux/booksSlice'
 
 
 function AddPageScreen({route, navigation}) {
-    const {Id, Name, Pages} = route.params;
+    const {id, fullname, pages} = route.params;
     const { getItem, setItem } = useAsyncStorage('books');
-    const Options = React.useState(0);
-     React.useLayoutEffect(() => {
+    const books = useSelector(state => state.books)
+	const dispatch = useDispatch()
+
+    React.useLayoutEffect(() => {
         navigation.setOptions({
         headerTransparent: false,
         title: 'Редактировать книгу',
         });
-    }, [navigation, Options]);
-
-/// IMAGE PICKER
-    const [image, setImage] = useState(null);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (Platform.OS !== 'web') {
-  //       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-  //       if (status !== 'granted') {
-  //         alert('Sorry, we need camera roll permissions to make this work!');
-  //       }
-  //     }
-  //   })();
-  // }, []);
-
-    const pickImage = async () => {
-    // let result = launchImageLibrary({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //   allowsEditing: true,
-    //   aspect: [4, 5],
-    //   quality: 1,
-    // });
-    // console.log(result);
-    // if (!result.cancelled) {
-    //   setImage(result.uri);
-    //   const item = await getItem();
-    //   const arr = (JSON.parse(item));
-    //   arr[Id].pages.push(result.uri)
-    //   setItem(JSON.stringify(arr));
-    //   console.log(arr)
-    //   navigation.navigate("HomeScreen")
-    // }
-  };
-
+    }, [navigation]);
   
     const DeleteBook = async () => {
-        const item = await getItem()
-        const arr = (JSON.parse(item))
-        arr.splice(('fullname' == Name),  1)
-        setItem(JSON.stringify(arr));
-        console.log('Это после', arr)
+        books.splice(('id' == id),  1)
+        dispatch(setBooks(books))
         navigation.navigate("HomeScreen")
-
-  }
+    }
 
     const takePhotoFromCamera = () => {
         ImagePicker.openCamera({
             width: 400,
             height: 500,
             cropping: true,
-            mediaType: 'photo'
+            mediaType: 'photo',
+            cropperToolbarTitle: "Редактирование",
+            freeStyleCropEnabled: true
         }).then( async (image) => {
-            setImage(image.path)
-            const item = await getItem()
-            const arr = (JSON.parse(item))
-            arr[Id].pages.push(image.path)
-            setItem(JSON.stringify(arr))
-        }).then(
+            // books.find( (i) => i.id == id).pages.push(image.path)
+            dispatch(addPage(image.path))
             navigation.navigate("HomeScreen")
-        )
+        })
     }
 
     const takePhotoFromLibrary = () => {
         ImagePicker.openPicker({
             multiple: true,
-            mediaType: 'photo'
+            mediaType: 'photo',
+            cropping: true,
+            cropperToolbarTitle: "Редактирование",
+            freeStyleCropEnabled: true
         }).then( async (images) => {
-            const item = await getItem()
-            const arr = (JSON.parse(item))
             images.map( (image) => {
-                console.log(image.path)
-                setImage(image.path)
-                arr[Id].pages.push(image.path)
+                dispatch(addPage(image.path))
             })
-            setItem(JSON.stringify(arr))
-        }).then(
             navigation.navigate("HomeScreen")
-        )
+        })
     }
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Button  title="галерея" onPress={takePhotoFromLibrary} />
         <Button  title="кумера" onPress={takePhotoFromCamera} />
-
+        {/* <Button title="ds" onPress={getBook}></Button> */}
         <DelBook onPress={() => {
             DeleteBook() 
         }}>
