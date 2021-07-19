@@ -56,7 +56,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       paddingBottom: 150,
     },
-
+    deleteText: {
+      color: '#FF0000',
+      textAlign: 'center',
+      fontSize: 20,
+    }
   });
   
   

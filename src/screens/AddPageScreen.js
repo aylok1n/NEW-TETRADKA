@@ -4,7 +4,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import styled from 'styled-components/native';
 import { useSelector, useDispatch } from 'react-redux'
-import {setBooks, addPage } from '../redux/booksSlice'
+import {setBooks, addPage, deleteBook } from '../redux/booksSlice'
 
 
 function AddPageScreen({route, navigation}) {
@@ -21,8 +21,7 @@ function AddPageScreen({route, navigation}) {
     }, [navigation]);
   
     const DeleteBook = async () => {
-        books.splice(('id' == id),  1)
-        dispatch(setBooks(books))
+        dispatch(deleteBook())
         navigation.navigate("HomeScreen")
     }
 
@@ -35,7 +34,6 @@ function AddPageScreen({route, navigation}) {
             cropperToolbarTitle: "Редактирование",
             freeStyleCropEnabled: true
         }).then( async (image) => {
-            // books.find( (i) => i.id == id).pages.push(image.path)
             dispatch(addPage(image.path))
             navigation.navigate("HomeScreen")
         })

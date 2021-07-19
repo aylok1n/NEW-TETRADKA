@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Button, SafeAreaView, View, Text, TouchableOpacity, ImageBackground} from 'react-native';
+import {ScrollView, Button, SafeAreaView, View, Text, TouchableOpacity, ImageBackground,} from 'react-native';
 import styles from '../styles.js';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -7,38 +7,34 @@ import PageItem from '../Components/PageItem.js'
 import ImageView from 'react-native-image-view';
 import PopUpMenu from '../Components/PopUpMenu.js';
 import {EmptyText} from '../Components/EmptyText'
+import { useSelector } from 'react-redux';
 
 
 
-function BookScreen({route, navigation}) {
-  	const {id, fullname, pages} = route.params;
+function BookScreen({ navigation}) {
   	const [isVisible, setIsVisible] = React.useState(false)
   	const [pageNumber, setPageNumber] = React.useState(0)
-  	const [isVisibleHeader, setIsVisibleHeader] = React.useState(true)
-	const images = []
-  
+    const id = useSelector(state => state.currentId)
+    const fullname = useSelector(state => state.books.find((i) => i.id == state.currentId).fullname)
+    const pages = useSelector(state => state.books.find((i) => i.id == state.currentId).pages)
   	React.useLayoutEffect(() => {
-		const images = [];
 		navigation.setOptions({
 			headerTransparent: true,
-			headerShown: isVisibleHeader,
 			title: '',
 		});
-		pages.map((uri) => images.push({
-			source: {uri : uri},
-		}))
   	}, [navigation]);
 
-	React.useEffect(() => {
-		pages.map((uri) => images.push({
-			source: {uri : uri},
-		}))
-	}, [])
+	
+	const images = []
+	pages.map((uri) => images.push({
+		source: {uri : uri},
+	}))
 
   
 	return (
 	  	<Container>
 			<ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
+			<PopUpMenu/>
 			{pages != 0 ?
 				<View>
 					<ImageView
@@ -50,13 +46,8 @@ function BookScreen({route, navigation}) {
 						onClose={() => {setIsVisible(false)}}
 						isSwipeCloseEnabled={false}
 					/>
-					<PopUpMenu/>
-					<ScrollView
-							onScroll={() => setIsVisibleHeader(true)}
-							style={styled.scrollView}>
-							<FullName numberOfLines={1} ellipsizeMode='tail'>
-								{fullname}
-							</FullName>
+					<ScrollView>
+						<FullName numberOfLines={1} ellipsizeMode='tail'>{fullname}</FullName>
 							{pages.map((page, id,) => 
 							<View  key={id}>
 								<TouchableOpacity activeOpacity={0.95} onPress={() => {

@@ -14,6 +14,7 @@ import AddPageScreen from './screens/AddPageScreen.js';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux'
 import {setBooks} from './redux/booksSlice'
+import PopUpMenu from './Components/PopUpMenu.js';
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,7 @@ const App = () => {
     const books = useSelector(state => state.books)
     const dispatch = useDispatch()
     const { getItem, setItem } = useAsyncStorage('books');
-    
+
     React.useEffect(async () => {
 		const item = await getItem();
 		item != null ? dispatch(setBooks(JSON.parse(item))) : dispatch(setBooks([]))
@@ -81,6 +82,7 @@ const App = () => {
                             paddingTop: 12
                             }
                         }}/>
+                        <Stack.Screen name="PopUpMenu" component={PopUpMenu}/>  
                         <Stack.Screen name="AddPageScreen" component={AddPageScreen}/>  
                     </Stack.Navigator>
                 </NavigationContainer>

@@ -17,16 +17,19 @@ export const booksSlice = createSlice({
       AsyncStorage.setItem('books', JSON.stringify(state.books))
     },
     addPage : (state, action) => {
-      console.log(state.books.find((i) => i.id == state.currentId).pages)
       state.books.find((i) => i.id == state.currentId).pages.push(action.payload)
       AsyncStorage.setItem('books', JSON.stringify(state.books))
     },
     setCurrenId: (state, action) => {
       state.currentId = action.payload
+    },
+    deleteBook: (state) => {
+      state.books.splice((i) => i.id == state.currentId,  1)
+      AsyncStorage.setItem('books', JSON.stringify(state.books))
     }
   }
 })
 
-export const { setBooks, addBook, addPage, setCurrenId } = booksSlice.actions
+export const { setBooks, addBook, addPage, setCurrenId, deleteBook } = booksSlice.actions
 
 export default booksSlice.reducer

@@ -10,11 +10,7 @@ const BookItem = ({id, fullname, pages}) => {
   	const dispatch = useDispatch()
 	const openBook = () => {
         dispatch(setCurrenId(id))
-        navigation.navigate('BookScreen', {
-        id: id,
-        fullname: fullname,
-        pages: pages,
-        })
+        navigation.navigate('BookScreen')
     }
   	let textAvatar = fullname.split(' ')
 	return (

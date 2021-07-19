@@ -15,7 +15,7 @@ import {setBooks} from '../redux/booksSlice'
 const HomeScreen = ({ navigation }) => {
 	const [isClear,setIsClear] = React.useState(true)
   	const isFocused = useIsFocused()
-  	const books = useSelector(state => state.books)
+  	const books = useSelector(state => state.books) 
 
   	React.useEffect(async () => {
 		if(books != []){
@@ -30,7 +30,7 @@ const HomeScreen = ({ navigation }) => {
 			<ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>	
 				{isClear ? <EmptyText>Добавьте первую книгу</EmptyText> : null}
 				<ScrollView style={styles.scrollView}>
-					{books.map((items,) => <BookItem key={items.id} {...items} />)}
+					{books.map((items) => <BookItem key={items.id} {...items} />)}
 				</ScrollView>
 				<PlusButton 
 					onPress={() => navigation.navigate('AddBookScreen')} 
