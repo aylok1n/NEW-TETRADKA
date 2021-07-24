@@ -34,7 +34,7 @@ function BookScreen({ navigation}) {
 	return (
 	  	<Container>
 			<ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
-			<PopUpMenu/>
+			<PopUpMenu navigation={navigation}/>
 			{pages != 0 ?
 				<View>
 					<ImageView
@@ -63,7 +63,7 @@ function BookScreen({ navigation}) {
 				<EmptyText>Добавьте изображение</EmptyText>
 			}
 
-				<PencilButton 
+				{/* <PencilButton 
 					onPress={() => navigation.navigate('AddPageScreen', {
 						id: id,
 						fullname: fullname,
@@ -71,7 +71,7 @@ function BookScreen({ navigation}) {
 					})} 
 					style ={{shadowColor: "#000",elevation: 10}}>
 					<Icon name="pencil" size={30} color="white" />
-				</PencilButton>
+				</PencilButton> */}
 			</ImageBackground>
 		</Container>
 	)

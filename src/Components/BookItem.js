@@ -1,4 +1,5 @@
 import React from 'react';
+import { Modal, View, Tex } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -6,24 +7,29 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setCurrenId } from '../redux/booksSlice'
 
 const BookItem = ({id, fullname, pages}) => {
-  	const navigation = useNavigation();
-  	const dispatch = useDispatch()
-	const openBook = () => {
+    const navigation = useNavigation();
+    const dispatch = useDispatch()
+    const openBook = () => {
         dispatch(setCurrenId(id))
         navigation.navigate('BookScreen')
     }
-  	let textAvatar = fullname.split(' ')
-	return (
-		<Container onPress={openBook}>
-			<Avatar>        
-			<Icon name="book-open" size={60} color="white">
-			</Icon>
-				<TextAvatar>
-				{textAvatar[0][0].toUpperCase() }   {textAvatar[1] ? textAvatar[1][0] : '   '}
-				</TextAvatar> 
-			</Avatar>
-			<FullName>{fullname}</FullName>
-		</Container>
+
+    let textAvatar = fullname.split(' ')
+    
+    return (
+        <Container
+        onPress={openBook}
+        >
+
+        <Avatar>
+        <Icon name="book-open" size={60} color="white">
+        </Icon>
+            <TextAvatar>
+            {textAvatar[0][0].toUpperCase() }   {textAvatar[1] ? textAvatar[1][0] : '   '}
+            </TextAvatar>
+        </Avatar>
+        <FullName>{fullname}</FullName>
+        </Container>
     )
 };
 
@@ -62,7 +68,7 @@ const Container = styled.TouchableOpacity`
   borderColor: #F4FFFF;
   padding:10px 15px;
   margin:5px auto;
-  background-color: rgba(	0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   width: 90%
 `;
 

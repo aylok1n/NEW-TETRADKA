@@ -1,6 +1,4 @@
 import React from 'react';
-
-import {StatusBar, useColorScheme} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -14,7 +12,6 @@ import AddPageScreen from './screens/AddPageScreen.js';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux'
 import {setBooks} from './redux/booksSlice'
-import PopUpMenu from './Components/PopUpMenu.js';
 
 const Stack = createStackNavigator();
 
@@ -34,12 +31,6 @@ const App = () => {
 
     return (
             <MenuProvider>
-                <StatusBar
-                animated={true}
-                backgroundColor="#E6E6FA"
-                barStyle={'dark-content'}
-                showHideTransition={'fade'}
-                hidden={false} />
                 <NavigationContainer>
                     <Stack.Navigator>
                         <Stack.Screen
@@ -82,8 +73,6 @@ const App = () => {
                             paddingTop: 12
                             }
                         }}/>
-                        <Stack.Screen name="PopUpMenu" component={PopUpMenu}/>  
-                        <Stack.Screen name="AddPageScreen" component={AddPageScreen}/>  
                     </Stack.Navigator>
                 </NavigationContainer>
             </MenuProvider>

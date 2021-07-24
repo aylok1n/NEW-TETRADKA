@@ -1,19 +1,19 @@
 import React from 'react';
 import {Text, Dimensions, TouchableOpacity} from 'react-native'
-import styled from 'styled-components/native';
-import styles from '../styles.js';
+import styled from 'styled-components/native'
 import {Menu, MenuOptions, MenuOption, MenuTrigger,renderers} from 'react-native-popup-menu';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useSelector, useDispatch } from 'react-redux'
 import { addPage, deleteBook } from '../redux/booksSlice'
-  
+import RNImageToPdf from 'react-native-image-to-pdf';
+
+let width = Dimensions.get('window').width
+let height = Dimensions.get('window').height * 0.9
+
 const PopUpMenu = ({navigation}) => {
     const books = useSelector(state => state.books)
+    const bookId = useSelector(state => state.currentId) 
 	const dispatch = useDispatch()
-    const DeleteBook = async () => {
-        navigation.navigate("HomeScreen")
-        dispatch(deleteBook())
-    }
 
     const takePhotoFromCamera = () => {
         ImagePicker.openCamera({
@@ -41,23 +41,42 @@ const PopUpMenu = ({navigation}) => {
             })
         })
     }
+
+    const myAsyncPDFFunction = async () => {
+        try {
+            const options = {
+                imagePaths: books.find((i) => i.id == bookId).pages,
+                name: books.find((i) => i.id == bookId).fullname,
+                maxSize: { 
+                    width: 900,
+                    height: Math.round(height / (height * 900)),
+                },
+                quality: 1
+            };
+            console.log(options)
+            const pdf = await RNImageToPdf.createPDFbyImages(options)
+            console.log(pdf.filePath)
+        } 
+        catch(e) {
+            console.log(e);
+        }
+        // console.log(books.find((i) => i.id == bookId).pages)
+    }
+
     return (
         <Container >
         <Menu renderer={renderers.SlideInMenu} >
-            <MenuTrigger customStyles={triggerStyles} text='...'>
+            <MenuTrigger customStyles={triggerStyles} text='+'>
             </MenuTrigger>
             <MenuOptions customStyles={optionsStyles}>
                 <MenuOption onSelect={takePhotoFromCamera} text='Открыть камеру'/>
                 <MenuOption onSelect={takePhotoFromLibrary} text='Добавить фото из галереи'/>
-                <MenuOption onSelect={DeleteBook}><Text style={styles.deleteText}>Удалить</Text></MenuOption>
+                <MenuOption onSelect={myAsyncPDFFunction} text='Сохранить в PDF'/>
             </MenuOptions>
       </Menu>
     </Container>
     )
 }
-
-let width = Dimensions.get('window').width
-let height = Dimensions.get('window').height * 0.9
 
 const Container = styled.View`
     z-index: 9999;
