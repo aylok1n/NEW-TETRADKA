@@ -10,7 +10,7 @@ import { useIsFocused } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteBook, setCurrenId, renameBook } from '../redux/booksSlice'
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
-import CloseIcon from 'react-native-vector-icons/AntDesign';
+import SortIcon from 'react-native-vector-icons/FontAwesome5';
 import RenameIcon from 'react-native-vector-icons/Feather';
 
 
@@ -22,6 +22,12 @@ const HomeScreen = ({ route, navigation }) => {
     const [modalVisible, setModalVisible] = React.useState(false)
     const [modalVisibleDelete, setModalVisibleDelete] = React.useState(false)
     const [name, onChangeName] = React.useState('');
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTransparent: true,
+        });
+    }, [navigation]);
 
     const onDelete = (id) => {
         dispatch(setCurrenId(id))
@@ -96,6 +102,13 @@ const HomeScreen = ({ route, navigation }) => {
             </Modal>
             <ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
                 {books.length === 0 ? <EmptyText>Добавьте альбом</EmptyText> : null}
+                <View style={styles.sortView}>
+
+                    <TouchableOpacity style={{ width: 120, flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={{marginRight: 10, color: 'white', fontSize: 18, fontWeight: 'bold'}}>По имени</Text>
+                        <SortIcon name='sort-alpha-down' color="white" size={28} />
+                    </TouchableOpacity>
+                </View>
                 <SwipeListView
                     style={styles.scrollView}
                     data={books}
@@ -131,6 +144,7 @@ const HomeScreen = ({ route, navigation }) => {
                         }
                     }}
                 />
+
                 <PlusButton
                     onPress={() => navigation.navigate('AddBookScreen')}
                     style={{ shadowColor: "#1E90FF;", elevation: 8, }}>
