@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {ScrollView, ImageBackground, View, Text, TouchableOpacity, Alert, TextInput, Modal, Button} from 'react-native';
+import { ScrollView, ImageBackground, View, Text, TouchableOpacity, Alert, TextInput, Modal, Button, Pressable } from 'react-native';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import styles from '../styles.js';
 import Icon from 'react-native-vector-icons/Feather';
@@ -8,29 +8,21 @@ import BookItem from '../Components/BookItem';
 import { EmptyText } from '../Components/EmptyText.js';
 import { useIsFocused } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
-import {setBooks, deleteBook, setCurrenId, renameBook} from '../redux/booksSlice'
+import { deleteBook, setCurrenId, renameBook } from '../redux/booksSlice'
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
 import CloseIcon from 'react-native-vector-icons/AntDesign';
 import RenameIcon from 'react-native-vector-icons/Feather';
 
 
 const HomeScreen = ({ route, navigation }) => {
-	const [isClear,setIsClear] = React.useState(true)
-	
-  	const isFocused = useIsFocused()
-  	const books = useSelector(state => state.books)
-    const bookId = useSelector(state => state.currentId)  
-	const dispatch = useDispatch()
-	console.log(isClear)
-    const [modalVisible,setModalVisible] = React.useState(false)
-	const [name, onChangeName] = React.useState(bookId !== 0 ? books.find((i) => i.id == bookId).fullname : '');
 
-  	React.useEffect(async () => {
-		if(books === []){
-			setIsClear(true)
-		} else setIsClear(false)
-  	} , [isFocused])
-    
+    const books = useSelector(state => state.books)
+    const bookId = useSelector(state => state.currentId)
+    const dispatch = useDispatch()
+    const [modalVisible, setModalVisible] = React.useState(false)
+    const [modalVisibleDelete, setModalVisibleDelete] = React.useState(false)
+    const [name, onChangeName] = React.useState('');
+
     const onDelete = (id) => {
         dispatch(setCurrenId(id))
         dispatch(deleteBook())
@@ -41,64 +33,112 @@ const HomeScreen = ({ route, navigation }) => {
         setModalVisible(true)
     }
 
-	return (
-		<Container>
+    return (
+        <Container>
             <Modal
                 animationType="fade"
                 transparent={true}
                 visible={modalVisible}
-				onTouchCancel={() => setModalVisible(!modalVisible)}
-				on
-				>
-                <View style={styles.modalView}>
-                    <TextInput
-						value={name}
-                        style={styles.inputAddBook}
-                        onChangeText={onChangeName}
-                        placeholderTextColor="#FFFFFF"
-                    />
-                    <Button title='Coхранить' onPress={() => {
-						setModalVisible(!modalVisible);
-						dispatch(renameBook(name))}
-					}/>
-					<CancelButton onPress={() => setModalVisible(!modalVisible)}>
-						<CloseIcon name="close" size={25} color="red"/>
-					</CancelButton>
-                </View>
+            >
+                <TouchableOpacity style={styles.modalWindow} onPress={() => setModalVisible(!modalVisible)}>
+                    <View style={styles.modalView}>
+                        <Text style={{ textAlign: 'center', fontSize: 24 }}>Редактировать</Text>
+                        <TextInput
+                            value={name}
+                            style={styles.inputAddBook}
+                            onChangeText={onChangeName}
+                            placeholderTextColor="#FFFFFF"
+                        />
+                        <TouchableOpacity style={styles.modalButton}
+                            onPress={() => {
+                                setModalVisible(!modalVisible);
+                                dispatch(renameBook(name))
+                            }
+                            }
+                        >
+                            <Text style={{ fontSize: 18 }}>Coхранить</Text>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+
             </Modal>
-			<ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>	
-				{isClear ? <EmptyText>Добавьте альбом</EmptyText> : null}
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisibleDelete}
+            >
+                <TouchableOpacity style={styles.modalWindow} onPress={() => setModalVisibleDelete(!modalVisibleDelete)}>
+                    <View style={styles.modalView}>
+                        <Text style={{ textAlign: 'center', fontSize: 20 }}>Удалить {name}?</Text>
+                        <View style={{ flexDirection: 'row', padding: 5 }}>
+                            <TouchableOpacity style={styles.modalButton}
+                                onPress={() => {
+                                    setModalVisibleDelete(!modalVisibleDelete);
+                                }
+                                }
+                            >
+                                <Text style={{ fontSize: 18 }}>Отмена</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.modalButtonDelete}
+                                onPress={() => {
+                                    setModalVisibleDelete(!modalVisibleDelete);
+                                    dispatch(deleteBook())
+                                }
+                                }
+                            >
+                                <Text style={{ fontSize: 18 }}>Удалить</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
+            </Modal>
+            <ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
+                {books.length === 0 ? <EmptyText>Добавьте альбом</EmptyText> : null}
                 <SwipeListView
                     style={styles.scrollView}
                     data={books}
-                    leftOpenValue={80}
-                    rightOpenValue={-80}
+                    leftActivationValue={150}
+                    rightActivationValue={-150}
                     useNativeDriver={true}
                     closeOnRowOpen={true}
                     closeOnScroll={true}
-					closeOnRowPress={true}
-                    renderItem={ (data) => (
+                    closeOnRowPress={true}
+                    renderItem={(data) => (
                         <BookItem {...data.item} />
                     )}
-                    renderHiddenItem={ (data) => (
-                        <BookItemHidden>
+                    renderHiddenItem={(data) => (
+                        <BookItemHidden key={data.item.id}>
                             <TouchableOpacity onPress={() => onDelete(data.item.id)}>
-                                <DeleteIcon name="delete" size={25} color="red"/>
+                                <DeleteIcon name="delete" size={30} color="red" />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => onRename(data.item.id)}>
-                                <RenameIcon name="edit-2" size={25} color="black"/>
+                                <RenameIcon name="edit-2" size={30} color="black" />
                             </TouchableOpacity>
                         </BookItemHidden>
                     )}
+                    onLeftActionStatusChange={(data) => {
+                        if (data.isActivated) {
+                            onChangeName(books.find((i) => i.id == bookId).fullname)
+                            setModalVisibleDelete(!modalVisibleDelete);
+                        }
+                    }}
+                    onRightActionStatusChange={(data) => {
+                        if (data.isActivated) {
+                            onChangeName(books.find((i) => i.id == bookId).fullname)
+                            setModalVisible(!modalVisible);
+                        }
+                    }}
                 />
-				<PlusButton 
-					onPress={() => navigation.navigate('AddBookScreen')} 
-					style ={{shadowColor: "#1E90FF;", elevation: 8,}}>
-					<Icon name="folder-plus" size={50} color="white" />
-				</PlusButton>
-			</ImageBackground>
-		</Container> 
-	);
+                <PlusButton
+                    onPress={() => navigation.navigate('AddBookScreen')}
+                    style={{ shadowColor: "#1E90FF;", elevation: 8, }}>
+                    <Icon name="folder-plus" size={50} color="white" />
+                </PlusButton>
+            </ImageBackground>
+        </Container>
+    );
 }
 
 export default HomeScreen;
@@ -112,8 +152,7 @@ const BookItemHidden = styled.TouchableOpacity`
     borderColor: #F4FFFF;
     padding:10px 25px;
     margin:5px auto;
-    border: 1px solid black;
-    width: 90%
+    width: 80%
 `;
 
 const PlusButton = styled.TouchableOpacity`

@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import {Button,View, Platform,} from 'react-native';
+import { Button, View, Platform, } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import styled from 'styled-components/native';
 import { useSelector, useDispatch } from 'react-redux'
-import {setBooks, addPage, deleteBook } from '../redux/booksSlice'
+import { setBooks, addPage, deleteBook } from '../redux/booksSlice'
 
 
-function AddPageScreen({route, navigation}) {
-    const {id, fullname, pages} = route.params;
+function AddPageScreen({ route, navigation }) {
+    const { id, fullname, pages } = route.params;
     const { getItem, setItem } = useAsyncStorage('books');
     const books = useSelector(state => state.books)
-	const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
-        headerTransparent: false,
-        title: 'Редактировать книгу',
+            headerTransparent: false,
+            title: 'Редактировать книгу',
         });
     }, [navigation]);
-  
+
     const DeleteBook = async () => {
         dispatch(deleteBook())
         navigation.navigate("HomeScreen")
@@ -33,7 +33,7 @@ function AddPageScreen({route, navigation}) {
             mediaType: 'photo',
             cropperToolbarTitle: "Редактирование",
             freeStyleCropEnabled: true
-        }).then( async (image) => {
+        }).then(async (image) => {
             dispatch(addPage(image.path))
             navigation.navigate("HomeScreen")
         })
@@ -46,8 +46,8 @@ function AddPageScreen({route, navigation}) {
             cropping: true,
             cropperToolbarTitle: "Редактирование",
             freeStyleCropEnabled: true
-        }).then( async (images) => {
-            images.map( (image) => {
+        }).then(async (images) => {
+            images.map((image) => {
                 dispatch(addPage(image.path))
             })
             navigation.navigate("HomeScreen")
@@ -56,17 +56,17 @@ function AddPageScreen({route, navigation}) {
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Button  title="галерея" onPress={takePhotoFromLibrary} />
-        <Button  title="кумера" onPress={takePhotoFromCamera} />
-        {/* <Button title="ds" onPress={getBook}></Button> */}
-        <DelBook onPress={() => {
-            DeleteBook() 
-        }}>
-            <DelText>Удалить Книгу</DelText>
-        </DelBook>
+            <Button title="галерея" onPress={takePhotoFromLibrary} />
+            <Button title="кумера" onPress={takePhotoFromCamera} />
+            {/* <Button title="ds" onPress={getBook}></Button> */}
+            <DelBook onPress={() => {
+                DeleteBook()
+            }}>
+                <DelText>Удалить Книгу</DelText>
+            </DelBook>
         </View>
     );
-    }
+}
 
 const AddBookScreen = styled.TouchableOpacity`
 alignItems: center;

@@ -24,7 +24,8 @@ export const booksSlice = createSlice({
       state.currentId = action.payload
     },
     deleteBook: (state) => {
-      state.books.splice((i) => i.id == state.currentId,  1)
+      state.books = state.books.filter((i) => i.id !== state.currentId)
+      console.log(state.currentId);
       state.currentId = 0
       AsyncStorage.setItem('books', JSON.stringify(state.books))
     },

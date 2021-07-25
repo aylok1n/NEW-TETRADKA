@@ -7,11 +7,10 @@ import { MenuProvider } from 'react-native-popup-menu';
 import HomeScreen from './screens/HomeScreen.js'
 import BookScreen from './screens/BookScreen.js'
 import AddBookScreen from './screens/AddBookScreen.js'
-import AddPageScreen from './screens/AddPageScreen.js';
 
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux'
-import {setBooks} from './redux/booksSlice'
+import { setBooks } from './redux/booksSlice'
 
 const Stack = createStackNavigator();
 
@@ -22,60 +21,60 @@ const App = () => {
     const { getItem, setItem } = useAsyncStorage('books');
 
     React.useEffect(async () => {
-		const item = await getItem();
-		item != null ? dispatch(setBooks(JSON.parse(item))) : dispatch(setBooks([]))
+        const item = await getItem();
+        item != null ? dispatch(setBooks(JSON.parse(item))) : dispatch(setBooks([]))
         return async () => {
             await setItem('books', JSON.stringify(books))
         }
-  	} , [])
+    }, [])
 
     return (
-            <MenuProvider>
-                <NavigationContainer>
-                    <Stack.Navigator>
-                        <Stack.Screen
+        <MenuProvider>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen
                         name="HomeScreen"
-                        component={HomeScreen} 
+                        component={HomeScreen}
                         options={{
                             title: 'TETRADKA',
                             headerTransparent: true,
                             headerTintColor: '#fff',
                             headerTitleStyle: {
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            fontSize: 28,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                fontSize: 28,
                             },
-                            headerTitleContainerStyle : {
-                            width: '100%',
-                            position: 'absolute',
-                            left: 0,
-                            height: 60,
-                            paddingTop: 12
+                            headerTitleContainerStyle: {
+                                width: '100%',
+                                position: 'absolute',
+                                left: 0,
+                                height: 60,
+                                paddingTop: 12
                             }
-                        }}/> 
-                        <Stack.Screen name="BookScreen" component={BookScreen}/>
-                        <Stack.Screen
-                        name="AddBookScreen" 
+                        }} />
+                    <Stack.Screen name="BookScreen" component={BookScreen} />
+                    <Stack.Screen
+                        name="AddBookScreen"
                         component={AddBookScreen}
                         options={{
                             title: 'Добавить книгу',
                             headerTransparent: true,
                             headerTintColor: '#fff',
                             headerTitleStyle: {
-                            textAlign: 'center',
-                            fontSize: 26,
+                                textAlign: 'center',
+                                fontSize: 26,
                             },
-                            headerTitleContainerStyle : {
-                            width: '60%',
-                            position: 'absolute',
-                            left: '20%',
-                            height: 60,
-                            paddingTop: 12
+                            headerTitleContainerStyle: {
+                                width: '60%',
+                                position: 'absolute',
+                                left: '20%',
+                                height: 60,
+                                paddingTop: 12
                             }
-                        }}/>
-                    </Stack.Navigator>
-                </NavigationContainer>
-            </MenuProvider>
+                        }} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </MenuProvider>
     );
 }
 

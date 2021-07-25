@@ -61,10 +61,15 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize: 20,
     },
+    modalWindow: {
+      flex: 1,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },  
     modalView: {
-      marginTop: 150,
       margin: 20,
-      backgroundColor: "white",
+      backgroundColor: "rgb(255,255,255)",
       borderRadius: 20,
       padding: 35,
       alignItems: "center",
@@ -75,8 +80,23 @@ const styles = StyleSheet.create({
       },
       shadowOpacity: 0.25,
       shadowRadius: 4,
-      elevation: 5
     },
+    modalButton: {
+      padding: 5,
+      paddingHorizontal: 15,
+      margin: 10,
+      marginBottom: 0,
+      backgroundColor: 'rgba(	30, 144, 255,0.95)',
+      borderRadius: 10
+    },  
+    modalButtonDelete: {
+      padding: 5,
+      paddingHorizontal: 15,
+      margin: 10,
+      marginBottom: 0,
+      backgroundColor: 'rgba(	255, 40, 40,0.7)',
+      borderRadius: 10
+    }
   });
   
   

@@ -1,73 +1,70 @@
 import React from 'react';
-import {ScrollView, Button, SafeAreaView, View, Text, TouchableOpacity, ImageBackground,} from 'react-native';
+import { ScrollView, Button, SafeAreaView, View, Text, TouchableOpacity, ImageBackground, } from 'react-native';
 import styles from '../styles.js';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import PageItem from '../Components/PageItem.js'
 import ImageView from 'react-native-image-view';
 import PopUpMenu from '../Components/PopUpMenu.js';
-import {EmptyText} from '../Components/EmptyText'
+import { EmptyText } from '../Components/EmptyText'
 import { useSelector } from 'react-redux';
 
 
 
-function BookScreen({ navigation}) {
-  	const [isVisible, setIsVisible] = React.useState(false)
-  	const [pageNumber, setPageNumber] = React.useState(0)
+function BookScreen({ navigation }) {
+	const [isVisible, setIsVisible] = React.useState(false)
+	const [pageNumber, setPageNumber] = React.useState(0)
 	const images = []
-    const id = useSelector(state => state.currentId)
-    const fullname = useSelector(state => state.books.find((i) => i.id == state.currentId).fullname)
-    const pages = useSelector(state => state.books.find((i) => i.id == state.currentId).pages)
-  	React.useLayoutEffect(() => {
+	const id = useSelector(state => state.currentId)
+	const fullname = useSelector(state => state.books.find((i) => i.id == state.currentId).fullname)
+	const pages = useSelector(state => state.books.find((i) => i.id == state.currentId).pages)
+	React.useLayoutEffect(() => {
 		navigation.setOptions({
 			headerTransparent: true,
 			title: '',
 		});
-  	}, [navigation]);
-	
+	}, [navigation]);
+
 	pages.map((uri) => images.push({
-		source: {uri : uri},
+		source: { uri: uri },
 	}))
 	console.log(pages)
-  
+
 	return (
-	  	<Container>
+		<Container>
 			<ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
-			<PopUpMenu navigation={navigation}/>
-			{pages != 0 ?
-				<View>
-					<ImageView
-						images={images}
-						animationType={'fade'}
-						imageIndex={pageNumber}
-						isVisible={isVisible}
-						controls={{close: true ,next: false, prev: false}}
-						onClose={() => {setIsVisible(false)}}
-						isSwipeCloseEnabled={false}
-					/>
-					<ScrollView>
-						<FullName numberOfLines={1} ellipsizeMode='tail'>{fullname}</FullName>
-							{pages.map((page, id,) => 
-							<View  key={id}>
-								<TouchableOpacity activeOpacity={0.95} onPress={() => {
-									setIsVisible(true)
-									setPageNumber(id)
-								}}>
-									<PageItem source={{uri: page}}/> 
-								</TouchableOpacity>
-							</View>)}
-					</ScrollView>
-				</View>
-				:
-				<EmptyText>Добавьте изображение</EmptyText>
-			}
+				<PopUpMenu navigation={navigation} />
+					<View>
+						<ImageView
+							images={images}
+							animationType={'fade'}
+							imageIndex={pageNumber}
+							isVisible={isVisible}
+							controls={{ close: true, next: false, prev: false }}
+							onClose={() => { setIsVisible(false) }}
+							isSwipeCloseEnabled={false}
+						/>
+						<ScrollView>
+							<FullName numberOfLines={1} ellipsizeMode='tail'>{fullname}</FullName>
+							{pages.map((page, id,) =>
+								<View key={id}>
+									<TouchableOpacity activeOpacity={0.95} onPress={() => {
+										setIsVisible(true)
+										setPageNumber(id)
+									}}>
+										<PageItem source={{ uri: page }} />
+									</TouchableOpacity>
+								</View>)}
+						</ScrollView>
+					</View>
+					{pages.length === 0 ? <EmptyText>Добавьте изображение</EmptyText> : null}
 			</ImageBackground>
 		</Container>
 	)
-} 
+}
 
 
-const BookName  = styled.Text `
+const BookName = styled.Text`
 	font-Weight: 800;
 	font-size: 28px;
 	line-height: 30px;
