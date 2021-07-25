@@ -5,7 +5,8 @@ import {Menu, MenuOptions, MenuOption, MenuTrigger,renderers} from 'react-native
 import ImagePicker from 'react-native-image-crop-picker';
 import { useSelector, useDispatch } from 'react-redux'
 import { addPage, deleteBook } from '../redux/booksSlice'
-import RNImageToPdf from 'react-native-image-to-pdf';
+import RNHTMLtoPDF from "react-native-html-to-pdf";
+import Share from 'react-native-share'
 
 let width = Dimensions.get('window').width
 let height = Dimensions.get('window').height * 0.9
@@ -17,8 +18,8 @@ const PopUpMenu = ({navigation}) => {
 
     const takePhotoFromCamera = () => {
         ImagePicker.openCamera({
-            width: 400,
-            height: 500,
+            width: 612,
+            height: 792,
             cropping: true,
             mediaType: 'photo',
             cropperToolbarTitle: "Редактирование",
@@ -42,25 +43,22 @@ const PopUpMenu = ({navigation}) => {
         })
     }
 
-    const myAsyncPDFFunction = async () => {
-        try {
-            const options = {
-                imagePaths: books.find((i) => i.id == bookId).pages,
-                name: books.find((i) => i.id == bookId).fullname,
-                maxSize: { 
-                    width: 900,
-                    height: Math.round(height / (height * 900)),
-                },
-                quality: 1
-            };
-            console.log(options)
-            const pdf = await RNImageToPdf.createPDFbyImages(options)
-            console.log(pdf.filePath)
-        } 
-        catch(e) {
-            console.log(e);
-        }
-        // console.log(books.find((i) => i.id == bookId).pages)
+    const createPDF = async () => {
+        const html = `<h1 style='text-align: center'>${books.find((i) => i.id == bookId).fullname}</h1>
+        ${books.find((i) => i.id == bookId).pages.map(i => `<img style='width:100%; height:900px' src="${i}"/>`)}`
+        const options = {
+          html,
+          fileName: books.find((i) => i.id == bookId).fullname,
+          directory: 'Documents',
+        };
+    
+        let file = await RNHTMLtoPDF.convert(options)
+        console.log(file.filePath);
+        Share.open({
+            url: 'file://'+file.filePath,
+            title: 'Поделиться PDF'
+        });
+        // Share.share()
     }
 
     return (
@@ -71,7 +69,7 @@ const PopUpMenu = ({navigation}) => {
             <MenuOptions customStyles={optionsStyles}>
                 <MenuOption onSelect={takePhotoFromCamera} text='Открыть камеру'/>
                 <MenuOption onSelect={takePhotoFromLibrary} text='Добавить фото из галереи'/>
-                <MenuOption onSelect={myAsyncPDFFunction} text='Сохранить в PDF'/>
+                <MenuOption onSelect={createPDF} text='Поделиться PDF'/>
             </MenuOptions>
       </Menu>
     </Container>

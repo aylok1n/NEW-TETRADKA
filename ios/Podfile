@@ -18,6 +18,8 @@ target 'newTetradka' do
 
   pod 'RNImageToPdf', :path => '../node_modules/react-native-image-to-pdf'
 
+  pod 'react-native-html-to-pdf', :path => '../node_modules/react-native-html-to-pdf'
+
   target 'newTetradkaTests' do
     inherit! :complete
     # Pods for testing

@@ -68,7 +68,7 @@ const Container = styled.TouchableOpacity`
   borderColor: #F4FFFF;
   padding:10px 15px;
   margin:5px auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.85);
   width: 90%
 `;
 

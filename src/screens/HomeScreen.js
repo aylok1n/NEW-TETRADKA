@@ -39,8 +39,6 @@ const HomeScreen = ({ route, navigation }) => {
     const onRename = (id) => {
         dispatch(setCurrenId(id))
         setModalVisible(true)
-        
-        // dispatch(renameBook("fgdg"))
     }
 
 	return (
@@ -114,7 +112,7 @@ const BookItemHidden = styled.TouchableOpacity`
     borderColor: #F4FFFF;
     padding:10px 25px;
     margin:5px auto;
-    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid black;
     width: 90%
 `;
 
@@ -137,12 +135,6 @@ const CancelButton = styled.TouchableOpacity`
 	top:15px;
 	right:15px;
 `;
-
-// const DeleteButton = styled.TouchableOpacity`
-//     background-color: red;
-//     flex:1;
-//     height: 100%;
-// `;
 
 const Container = styled.View`
   flex: 1;

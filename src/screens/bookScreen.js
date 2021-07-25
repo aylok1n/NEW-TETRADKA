@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 function BookScreen({ navigation}) {
   	const [isVisible, setIsVisible] = React.useState(false)
   	const [pageNumber, setPageNumber] = React.useState(0)
+	const images = []
     const id = useSelector(state => state.currentId)
     const fullname = useSelector(state => state.books.find((i) => i.id == state.currentId).fullname)
     const pages = useSelector(state => state.books.find((i) => i.id == state.currentId).pages)
@@ -23,13 +24,11 @@ function BookScreen({ navigation}) {
 			title: '',
 		});
   	}, [navigation]);
-
 	
-	const images = []
 	pages.map((uri) => images.push({
 		source: {uri : uri},
 	}))
-
+	console.log(pages)
   
 	return (
 	  	<Container>
@@ -62,16 +61,6 @@ function BookScreen({ navigation}) {
 				:
 				<EmptyText>Добавьте изображение</EmptyText>
 			}
-
-				{/* <PencilButton 
-					onPress={() => navigation.navigate('AddPageScreen', {
-						id: id,
-						fullname: fullname,
-						pages: pages,
-					})} 
-					style ={{shadowColor: "#000",elevation: 10}}>
-					<Icon name="pencil" size={30} color="white" />
-				</PencilButton> */}
 			</ImageBackground>
 		</Container>
 	)
