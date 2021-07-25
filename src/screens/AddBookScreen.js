@@ -1,22 +1,22 @@
 import React from 'react';
-import {View, SafeAreaView, TextInput, ImageBackground,TouchableOpacity,Text, Alert} from 'react-native';
+import { View, SafeAreaView, TextInput, ImageBackground, TouchableOpacity, Text, Alert } from 'react-native';
 import styled from 'styled-components/native';
 import styles from '../styles.js';
 import { addBook } from '../redux/booksSlice.js';
 import { useDispatch } from 'react-redux';
 
-export default function AddBookScreen({route, navigation}) {
-  	const [text, onChangeText] = React.useState('');
+export default function AddBookScreen({ route, navigation }) {
+  const [text, onChangeText] = React.useState('');
 
-  	const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-  	const AddBook = async (text) => {
+  const AddBook = async (text) => {
     const newBook = {
-    	id: Date.now(),
-      	fullname: text ,
-      	pages: [], 
-	}
-	dispatch(addBook(newBook))
+      id: Date.now(),
+      fullname: text,
+      pages: [],
+    }
+    dispatch(addBook(newBook))
     navigation.navigate("HomeScreen")
   }
 
@@ -36,11 +36,11 @@ export default function AddBookScreen({route, navigation}) {
 
           <TouchableOpacity
             style={styles.buttonAddBook}
-            onPress={() => { 
+            onPress={() => {
               if (text != '') {
-                AddBook(text) 
+                AddBook(text)
               }
-              else Alert.alert('','Введите название книги')
+              else Alert.alert('', 'Введите название книги')
             }}>
             <Text style={styles.buttonAddBookText}>Добавить</Text>
           </TouchableOpacity>
