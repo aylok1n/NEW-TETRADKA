@@ -52,6 +52,7 @@ const App = () => {
                                 paddingTop: 12
                             }
                         }} />
+                        
                     <Stack.Screen name="BookScreen" component={BookScreen} />
                     <Stack.Screen
                         name="AddBookScreen"

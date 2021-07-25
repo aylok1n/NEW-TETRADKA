@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, Tex } from 'react-native';
+import { Modal, View, Text, ViewBase } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -15,20 +15,26 @@ const BookItem = ({ id, fullname, pages }) => {
   }
 
   let textAvatar = fullname.split(' ')
+  var date = new Date(id);
+  
 
   return (
     <Container
       onPress={openBook}
-      onPressIn={() => dispatch(setCurrenId(id))} 
+      onPressIn={() => dispatch(setCurrenId(id))}
     >
 
-      <Avatar>
-        <Icon name="book-open" size={60} color="white">
-        </Icon>
-        <TextAvatar>
-          {textAvatar[0][0].toUpperCase()}   {textAvatar[1] ? textAvatar[1][0] : '   '}
-        </TextAvatar>
-      </Avatar>
+      <AvatarContainer>
+        <Avatar>
+          <Icon name="book-open" size={50} color="white" >
+          </Icon>
+          <TextAvatar>
+            {textAvatar[0][0].toUpperCase()}   {textAvatar[1] ? textAvatar[1][0] : '   '}
+          </TextAvatar>
+          <Text style={{ color: '#fff' }}>{date.getHours() + ":" + date.getMinutes()}</Text>
+          <Text style={{ color: '#fff' }}>{date.getDate()  + "-" + (date.getMonth()+1) + "-" + date.getFullYear()}</Text>
+        </Avatar>
+      </AvatarContainer>
       <FullName>{fullname}</FullName>
     </Container>
   )
@@ -47,22 +53,18 @@ const FullName = styled.Text`
 `;
 const TextAvatar = styled.Text`
   font-weight: bold;
-  fontSize: 24px;
+  fontSize: 22px;
   text-align: center;
   color: #FFFFFF;
   position: absolute;
-  bottom: 24px;
+  bottom: 52px;
   color: #1E90FF;
   text-shadow: 0px 0px 5px #000000;
 `;
 
 const Avatar = styled.View`
   align-items: center;
-  flex-direction: row;
-  width:80px;
-  height:80px;
   background-color: transparent;
-  justify-content: center;
 `;
 
 const Container = styled.Pressable`
@@ -74,6 +76,14 @@ const Container = styled.Pressable`
   margin:5px auto;
   background-color: rgba(0, 0, 0, 1);
   width: 90%;
+
+`;
+
+const AvatarContainer = styled.View`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
 
 `;
 
