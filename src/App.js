@@ -53,7 +53,21 @@ const App = () => {
                             }
                         }} />
                         
-                    <Stack.Screen name="BookScreen" component={BookScreen} />
+                    <Stack.Screen name="BookScreen" component={BookScreen} options={{
+                            title: '',
+                            headerTransparent: true,
+                            headerTitleStyle: {
+                                textAlign: 'center',
+                                fontSize: 26,
+                            },
+                            headerTitleContainerStyle: {
+                                width: '60%',
+                                position: 'absolute',
+                                left: '20%',
+                                height: 60,
+                                paddingTop: 12
+                            },
+                        }} />
                     <Stack.Screen
                         name="AddBookScreen"
                         component={AddBookScreen}
@@ -71,13 +85,12 @@ const App = () => {
                                 left: '20%',
                                 height: 60,
                                 paddingTop: 12
-                            }
+                            },
                         }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </MenuProvider>
     );
 }
-
 
 export default App;

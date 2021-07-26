@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Button, SafeAreaView, View, Text, TouchableOpacity, ImageBackground, } from 'react-native';
+import { ScrollView, View, TouchableOpacity, ImageBackground, } from 'react-native';
 import styles from '../styles.js';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -9,8 +9,6 @@ import PopUpMenu from '../Components/PopUpMenu.js';
 import { EmptyText } from '../Components/EmptyText'
 import { useSelector } from 'react-redux';
 
-
-
 function BookScreen({ navigation }) {
 	const [isVisible, setIsVisible] = React.useState(false)
 	const [pageNumber, setPageNumber] = React.useState(0)
@@ -18,12 +16,6 @@ function BookScreen({ navigation }) {
 	const id = useSelector(state => state.currentId)
 	const fullname = useSelector(state => state.books.find((i) => i.id == state.currentId).fullname)
 	const pages = useSelector(state => state.books.find((i) => i.id == state.currentId).pages)
-	React.useLayoutEffect(() => {
-		navigation.setOptions({
-			headerTransparent: true,
-			title: '',
-		});
-	}, [navigation]);
 
 	pages.map((uri) => images.push({
 		source: { uri: uri },

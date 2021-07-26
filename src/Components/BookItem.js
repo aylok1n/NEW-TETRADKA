@@ -1,9 +1,9 @@
 import React from 'react';
-import { Modal, View, Text, ViewBase } from 'react-native';
+import { Text } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setCurrenId } from '../redux/booksSlice'
 
 const BookItem = ({ id, fullname, pages }) => {

@@ -1,16 +1,15 @@
 import React from 'react';
-import { Text, Dimensions, TouchableOpacity, Button, Pressable , TouchableNativeFeedback} from 'react-native'
+import { Dimensions, TouchableNativeFeedback} from 'react-native'
 import styled from 'styled-components/native'
 import { Menu, MenuOptions, MenuOption, MenuTrigger, renderers } from 'react-native-popup-menu';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useSelector, useDispatch } from 'react-redux'
-import { addPage, deleteBook } from '../redux/booksSlice'
+import { addPage, } from '../redux/booksSlice'
 import RNHTMLtoPDF from "react-native-html-to-pdf";
 import Share from 'react-native-share'
 import MenuIcon from 'react-native-vector-icons/Feather'
 
 let width = Dimensions.get('window').width
-let height = Dimensions.get('window').height * 0.9
 
 const PopUpMenu = ({ navigation }) => {
     const books = useSelector(state => state.books)

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { ScrollView, ImageBackground, View, Text, TouchableOpacity, Alert, TextInput, Modal, Button, Pressable, Vibration } from 'react-native';
-import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
+import { ImageBackground, View, Text, TouchableOpacity, TextInput, Modal, Vibration } from 'react-native';
+import { SwipeListView} from 'react-native-swipe-list-view';
 import styles from '../styles.js';
 import Icon from 'react-native-vector-icons/Feather';
 import BookItem from '../Components/BookItem';
@@ -132,14 +132,14 @@ const HomeScreen = ({ route, navigation }) => {
                     )}
                     onLeftActionStatusChange={(data) => {
                         if (data.isActivated) {
-                            Vibration.vibrate(150);
+                            Vibration.vibrate(70);
                             onChangeName(books.find((i) => i.id == bookId).fullname)
                             setModalVisibleDelete(!modalVisibleDelete);
                         }
                     }}
                     onRightActionStatusChange={(data) => {
                         if (data.isActivated) {
-                            Vibration.vibrate(150);
+                            Vibration.vibrate(70);
                             onChangeName(books.find((i) => i.id == bookId).fullname)
                             setModalVisible(!modalVisible);
                         }
