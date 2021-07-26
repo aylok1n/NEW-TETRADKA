@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { ScrollView, ImageBackground, View, Text, TouchableOpacity, Alert, TextInput, Modal, Button, Pressable } from 'react-native';
+import { ScrollView, ImageBackground, View, Text, TouchableOpacity, Alert, TextInput, Modal, Button, Pressable, Vibration } from 'react-native';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import styles from '../styles.js';
 import Icon from 'react-native-vector-icons/Feather';
@@ -12,7 +12,6 @@ import { deleteBook, setCurrenId, renameBook } from '../redux/booksSlice'
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
 import SortIcon from 'react-native-vector-icons/FontAwesome5';
 import RenameIcon from 'react-native-vector-icons/Feather';
-
 
 const HomeScreen = ({ route, navigation }) => {
 
@@ -104,8 +103,8 @@ const HomeScreen = ({ route, navigation }) => {
                 {books.length === 0 ? <EmptyText>Добавьте альбом</EmptyText> : null}
                 <View style={styles.sortView}>
 
-                    <TouchableOpacity style={{ width: 120, flexDirection: 'row', alignItems: 'center'}}>
-                        <Text style={{marginRight: 10, color: 'white', fontSize: 18, fontWeight: 'bold'}}>По имени</Text>
+                    <TouchableOpacity style={{ width: 120, flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ marginRight: 10, color: 'white', fontSize: 18, fontWeight: 'bold' }}>По имени</Text>
                         <SortIcon name='sort-alpha-down' color="white" size={28} />
                     </TouchableOpacity>
                 </View>
@@ -133,18 +132,19 @@ const HomeScreen = ({ route, navigation }) => {
                     )}
                     onLeftActionStatusChange={(data) => {
                         if (data.isActivated) {
+                            Vibration.vibrate(150);
                             onChangeName(books.find((i) => i.id == bookId).fullname)
                             setModalVisibleDelete(!modalVisibleDelete);
                         }
                     }}
                     onRightActionStatusChange={(data) => {
                         if (data.isActivated) {
+                            Vibration.vibrate(150);
                             onChangeName(books.find((i) => i.id == bookId).fullname)
                             setModalVisible(!modalVisible);
                         }
                     }}
                 />
-
                 <PlusButton
                     onPress={() => navigation.navigate('AddBookScreen')}
                     style={{ shadowColor: "#1E90FF;", elevation: 8, }}>
