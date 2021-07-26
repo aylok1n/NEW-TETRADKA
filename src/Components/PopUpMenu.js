@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Dimensions, TouchableOpacity, Button, Pressable } from 'react-native'
+import { Text, Dimensions, TouchableOpacity, Button, Pressable , TouchableNativeFeedback} from 'react-native'
 import styled from 'styled-components/native'
 import { Menu, MenuOptions, MenuOption, MenuTrigger, renderers } from 'react-native-popup-menu';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -45,7 +45,9 @@ const PopUpMenu = ({ navigation }) => {
     }
 
     const createPDF = async () => {
-        const html = `<h1 style='text-align: center'>${books.find((i) => i.id == bookId).fullname}</h1>
+        const html = `
+            <h1 style='font-size: 54; text-align: center; padding-top:400'>${books.find((i) => i.id == bookId).fullname}</h1>
+            <h3 style='text-align: center; padding-top:400'>PDF created by TETRATKA</h3>
         ${books.find((i) => i.id == bookId).pages.map(i => `<img style='width:100%; height:900px' src="${i}"/>`)}`
         const options = {
             html,
@@ -59,14 +61,13 @@ const PopUpMenu = ({ navigation }) => {
             url: 'file://' + file.filePath,
             title: 'Поделиться PDF'
         });
-        // Share.share()
     }
 
     return (
         <Container >
             <Menu renderer={renderers.SlideInMenu} >
-                <MenuTrigger customStyles={triggerStyles} >
-                    <MenuIcon name='menu' size={36}></MenuIcon>
+                <MenuTrigger customStyles={triggerStyles}>
+                    <MenuIcon name='menu' size={36} style={{zIndex: -2}}></MenuIcon>
                 </MenuTrigger>
                 <MenuOptions customStyles={optionsStyles}>
                     <MenuOption onSelect={takePhotoFromCamera} text='Открыть камеру' />
@@ -87,10 +88,13 @@ const Container = styled.View`
 
 const triggerStyles = {
     triggerTouchable: {
-        margin: 12,
-        activeOpacity: 100,
+        underlayColor: 'darkblue',
+        activeOpacity: 70,
     },
-    TriggerTouchableComponent: Pressable,
+    triggerWrapper: {
+        padding: 10,
+    },
+    TriggerTouchableComponent: TouchableNativeFeedback,
 };
 
 const optionsStyles = {
