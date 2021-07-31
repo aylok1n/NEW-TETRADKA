@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Pressable, Modal, } from 'react-native';
+import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Pressable, Modal, Vibration, } from 'react-native';
 import styles from '../styles.js';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -26,6 +26,7 @@ function BookScreen({ navigation }) {
 	}))
 
 	const onDelete = (page, id) => {
+		Vibration.vibrate(40)
 		setModalVisible(true)
 		setPageNumber(id)
 	}
