@@ -7,40 +7,40 @@ import { useDispatch } from 'react-redux'
 import { setCurrenId } from '../redux/booksSlice'
 
 const BookItem = ({ id, fullname, pages }) => {
-  const navigation = useNavigation();
-  const dispatch = useDispatch()
-  const openBook = () => {
-    dispatch(setCurrenId(id))
-    navigation.navigate('BookScreen')
-  }
+    const navigation = useNavigation();
+    const dispatch = useDispatch()
+    const openBook = () => {
+        dispatch(setCurrenId(id))
+        navigation.navigate('BookScreen')
+    }
 
-  let textAvatar = fullname.split(' ')
-  var date = new Date(id);
-  
+    let textAvatar = fullname.split(' ')
+    var date = new Date(id);
 
-  return (
-    <Container
-      onPress={openBook}
-      onPressIn={() => dispatch(setCurrenId(id))}
-    >
 
-      <AvatarContainer>
-        <Avatar>
-          <Icon name="book-open" size={50} color="white" >
-          </Icon>
-          <TextAvatar>
-            {textAvatar[0][0].toUpperCase()}   {textAvatar[1] ? textAvatar[1][0] : '   '}
-          </TextAvatar>
-          <Text style={{ color: '#fff' }}>{date.getHours() + ":" + date.getMinutes()}</Text>
-          <Text style={{ color: '#fff' }}>{date.getDate()  + "-" + (date.getMonth()+1) + "-" + date.getFullYear()}</Text>
-        </Avatar>
-      </AvatarContainer>
-      <FullName>{fullname}</FullName>
-    </Container>
-  )
+    return (
+        <Container
+            onPress={openBook}
+            onPressIn={() => dispatch(setCurrenId(id))}
+        >
+            <Avatar>
+                <Icon name="book-open" size={50} color="white" >
+                </Icon>
+                <TextAvatar>
+                    {textAvatar[0][0].toUpperCase()}   {textAvatar[1] ? textAvatar[1][0] : '   '}
+                </TextAvatar>
+            </Avatar>
+            <NameContainer>
+                <FullName>{fullname}</FullName>
+                <Text style={{ paddingLeft: 30, color: '#fff' }}>{date.getHours() + ":" + date.getMinutes() + ' ' + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()}</Text>
+            </NameContainer>
+        </Container>
+    )
 };
 
-
+const NameContainer = styled.View`
+    ali
+`
 
 const FullName = styled.Text`
   font-weight: bold;
@@ -57,7 +57,7 @@ const TextAvatar = styled.Text`
   text-align: center;
   color: #FFFFFF;
   position: absolute;
-  bottom: 52px;
+  bottom: 15px;
   color: #1E90FF;
   text-shadow: 0px 0px 5px #000000;
 `;
@@ -74,16 +74,8 @@ const Container = styled.Pressable`
   borderColor: #F4FFFF;
   padding:10px 15px;
   margin:5px auto;
-  background-color: rgba(0, 0, 0, 1);
-  width: 90%;
-
-`;
-
-const AvatarContainer = styled.View`
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.35);
+  width: 80%;
 
 `;
 

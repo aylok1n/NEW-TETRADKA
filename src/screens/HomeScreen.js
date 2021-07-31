@@ -115,12 +115,8 @@ const HomeScreen = ({ route, navigation }) => {
                     )}
                     renderHiddenItem={(data) => (
                         <BookItemHidden key={data.item.id}>
-                            <TouchableOpacity onPress={() => onDelete(data.item.id)}>
-                                <DeleteIcon name="delete" size={30} color="red" />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => onRename(data.item.id)}>
-                                <RenameIcon name="edit-2" size={30} color="black" />
-                            </TouchableOpacity>
+                            <DeleteIcon name="delete" size={30} color="red" />
+                            <RenameIcon name="edit-2" size={30} color="black" />
                         </BookItemHidden>
                     )}
                     onLeftActionStatusChange={(data) => {
@@ -170,16 +166,6 @@ const PlusButton = styled.TouchableOpacity`
 	position:absolute;
 	right:25px;
 	bottom:25px;
-`;
-
-const CancelButton = styled.TouchableOpacity`
-	align-items: center;
-	justify-content: center;
-	border-radius:50px;
-	background-color: transparent;
-	position:absolute;
-	top:15px;
-	right:15px;
 `;
 
 const Container = styled.View`
