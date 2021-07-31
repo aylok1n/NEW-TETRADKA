@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Pressable, Modal, } from 'react-native';
+import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Pressable, Modal, Vibration, } from 'react-native';
 import styles from '../styles.js';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -14,18 +14,22 @@ function BookScreen({ navigation }) {
 	const [isVisible, setIsVisible] = React.useState(false)
 	const [modalVisible, setModalVisible] = React.useState(false)
 	const [pageNumber, setPageNumber] = React.useState(0)
-	const images = []
+	let images = []
 	const id = useSelector(state => state.currentId)
 	const fullname = useSelector(state => state.books.find((i) => i.id == state.currentId).fullname)
 	const pages = useSelector(state => state.books.find((i) => i.id == state.currentId).pages)
 
 	const dispatch = useDispatch()
 
-	pages.map((uri) => images.push({
-		source: { uri: uri },
-	}))
+	React.useEffect(() => {
+		images = []
+		pages.map((uri) => images.push({
+			source: { uri: uri },
+		}))
+	}, [])
 
 	const onDelete = (page, id) => {
+		Vibration.vibrate(40)
 		setModalVisible(true)
 		setPageNumber(id)
 	}
@@ -72,6 +76,7 @@ function BookScreen({ navigation }) {
 						controls={{ close: true, next: false, prev: false }}
 						onClose={() => { setIsVisible(false) }}
 						isSwipeCloseEnabled={false}
+						renderFooter={() => (<View><Text>{pageNumber}/{images.length}</Text></View>)}
 					/>
 					<ScrollView>
 						<FullName numberOfLines={1} ellipsizeMode='tail'>{fullname}</FullName>

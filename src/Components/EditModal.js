@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Modal, Pressable, Alert } from 'react-native';
 import { useDispatch } from 'react-redux'
 import { renameBook } from '../redux/booksSlice'
 import styles from '../styles.js';
@@ -23,8 +23,11 @@ export default function EditModal({ modalVisibleEdit, setModalVisibleEdit, name,
                     />
                     <TouchableOpacity style={styles.modalButton}
                         onPress={() => {
-                            setModalVisibleEdit(!modalVisibleEdit);
-                            dispatch(renameBook(name))
+                            if (name != '') {
+                                setModalVisibleEdit(!modalVisibleEdit);
+                                dispatch(renameBook(name))
+                            }
+                            else Alert.alert('', 'Введите название книги')
                         }
                         }
                     >
