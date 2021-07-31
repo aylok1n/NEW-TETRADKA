@@ -55,7 +55,6 @@ const PopUpMenu = ({ navigation }) => {
         };
 
         let file = await RNHTMLtoPDF.convert(options)
-        console.log(file.filePath);
         Share.open({
             url: 'file://' + file.filePath,
             title: 'Поделиться PDF'

@@ -15,7 +15,6 @@ import { setBooks } from './redux/booksSlice'
 
 const Stack = createStackNavigator();
 
-
 const App = () => {
     const books = useSelector(state => state.books)
     const dispatch = useDispatch()
