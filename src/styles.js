@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   modalView: {
     width : width * 0.85,
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     margin: 10,
     marginBottom: 0,
-    backgroundColor: 'rgba(	255, 40, 40,0.7)',
+    backgroundColor: 'rgba(	255, 30, 30, 0.8)',
     borderRadius: 10
   },
   sortView: {
@@ -107,6 +108,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end'
+  },
+  bookItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: width,
+    alignItems: 'center'
+  },
+  bookItemIcon: {
+    marginHorizontal: -60
   }
 });
 

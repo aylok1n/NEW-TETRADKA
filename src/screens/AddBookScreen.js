@@ -16,6 +16,7 @@ export default function AddBookScreen({ route, navigation }) {
       fullname: text,
       pages: [],
     }
+    onChangeText('')
     dispatch(addBook(newBook))
     navigation.navigate("HomeScreen")
   }
