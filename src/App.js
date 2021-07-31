@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar  } from 'react-native';
 
 import { MenuProvider } from 'react-native-popup-menu';
 
@@ -30,6 +31,7 @@ const App = () => {
 
     return (
         <MenuProvider>
+            <StatusBar animated={true} barStyle={'light-content'} backgroundColor={'#000'}/>
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen
