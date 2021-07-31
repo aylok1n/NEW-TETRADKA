@@ -48,7 +48,6 @@ const BookItem = ({ id, fullname, pages }) => {
 };
 
 const NameContainer = styled.View`
-    ali
 `
 
 const FullName = styled.Text`

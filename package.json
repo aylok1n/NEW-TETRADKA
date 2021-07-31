@@ -1,6 +1,6 @@
 {
   "name": "TETRADKA",
-  "version": "0.1.1",
+  "version": "0.9.9",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

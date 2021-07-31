@@ -1,13 +1,12 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar  } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import { MenuProvider } from 'react-native-popup-menu';
 
 import HomeScreen from './screens/HomeScreen.js'
 import BookScreen from './screens/BookScreen.js'
-import AddBookScreen from './screens/AddBookScreen.js'
 
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux'
@@ -30,64 +29,44 @@ const App = () => {
 
     return (
         <MenuProvider>
-            <StatusBar animated={true} barStyle={'light-content'} backgroundColor={'#000'}/>
+            <StatusBar animated={true} barStyle={'light-content'} backgroundColor={'#000'} />
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen
                         name="HomeScreen"
                         component={HomeScreen}
                         options={{
+                            headerStatusBarHeight: 20,
                             title: 'TETRADKA',
                             headerTransparent: true,
                             headerTintColor: '#fff',
                             headerTitleStyle: {
                                 fontWeight: 'bold',
                                 textAlign: 'center',
-                                fontSize: 28,
+                                fontSize: 32,
                             },
                             headerTitleContainerStyle: {
                                 width: '100%',
                                 position: 'absolute',
                                 left: 0,
-                                height: 60,
-                                paddingTop: 12
-                            }
+                            },
                         }} />
-                        
+
                     <Stack.Screen name="BookScreen" component={BookScreen} options={{
-                            title: '',
-                            headerTransparent: true,
-                            headerTitleStyle: {
-                                textAlign: 'center',
-                                fontSize: 26,
-                            },
-                            headerTitleContainerStyle: {
-                                width: '60%',
-                                position: 'absolute',
-                                left: '20%',
-                                height: 60,
-                                paddingTop: 12
-                            },
-                        }} />
-                    <Stack.Screen
-                        name="AddBookScreen"
-                        component={AddBookScreen}
-                        options={{
-                            title: 'Добавить книгу',
-                            headerTransparent: true,
-                            headerTintColor: '#fff',
-                            headerTitleStyle: {
-                                textAlign: 'center',
-                                fontSize: 26,
-                            },
-                            headerTitleContainerStyle: {
-                                width: '60%',
-                                position: 'absolute',
-                                left: '20%',
-                                height: 60,
-                                paddingTop: 12
-                            },
-                        }} />
+                        title: '',
+                        headerTransparent: true,
+                        headerTitleStyle: {
+                            textAlign: 'center',
+                            fontSize: 26,
+                        },
+                        headerTitleContainerStyle: {
+                            width: '60%',
+                            position: 'absolute',
+                            left: '20%',
+                            height: 60,
+                            paddingTop: 12
+                        },
+                    }} />
                 </Stack.Navigator>
             </NavigationContainer>
         </MenuProvider>

@@ -92,7 +92,7 @@ const HomeScreen = ({ route, navigation }) => {
                     }}
                 />
                 <PlusButton
-                    onPress={() => {setModalVisibleAddBook(true); console.log(modalVisibleAddBook)}}
+                    onPress={() => { setModalVisibleAddBook(true); console.log(modalVisibleAddBook) }}
                     style={{ shadowColor: "#1E90FF;", elevation: 8, }}>
                     <Icon name="folder-plus" size={50} color="white" />
                 </PlusButton>
