@@ -101,13 +101,6 @@ const HomeScreen = ({ route, navigation }) => {
             </Modal>
             <ImageBackground source={require(`../img/background.jpg`)} resizeMode="cover" style={styles.image}>
                 {books.length === 0 ? <EmptyText>Добавьте альбом</EmptyText> : null}
-                <View style={styles.sortView}>
-
-                    <TouchableOpacity style={{ width: 120, flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ marginRight: 10, color: 'white', fontSize: 18, fontWeight: 'bold' }}>По имени</Text>
-                        <SortIcon name='sort-alpha-down' color="white" size={28} />
-                    </TouchableOpacity>
-                </View>
                 <SwipeListView
                     style={styles.scrollView}
                     data={books}

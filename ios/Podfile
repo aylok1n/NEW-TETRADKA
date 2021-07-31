@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'newTetradka' do
+target 'TETRADKA' do
   config = use_native_modules!
 
   use_react_native!(
@@ -20,7 +20,7 @@ target 'newTetradka' do
 
   pod 'react-native-html-to-pdf', :path => '../node_modules/react-native-html-to-pdf'
 
-  target 'newTetradkaTests' do
+  target 'TETRADKATests' do
     inherit! :complete
     # Pods for testing
   end
