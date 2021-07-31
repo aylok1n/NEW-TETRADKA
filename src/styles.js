@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalView: {
+    width : width * 0.85,
     margin: 20,
     backgroundColor: "rgb(255,255,255)",
     borderRadius: 20,
