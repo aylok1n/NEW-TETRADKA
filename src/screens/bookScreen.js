@@ -47,7 +47,7 @@ function BookScreen({ navigation }) {
 				flexDirection: 'row',
 				alignItems: 'center',
 				justifyContent: 'center',
-				backgroundColor: 'rgba(0, 0, 0, 0.4)',
+				backgroundColor: 'rgba(0, 0, 0, 0.1)',
 				paddingHorizontal: 10,
 				paddingVertical: 5,
 			},
