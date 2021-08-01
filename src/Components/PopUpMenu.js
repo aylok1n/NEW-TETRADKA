@@ -11,7 +11,7 @@ import MenuIcon from 'react-native-vector-icons/Feather'
 
 let width = Dimensions.get('window').width
 
-const PopUpMenu = ({ navigation }) => {
+const PopUpMenu = ({ navigation}) => {
     const books = useSelector(state => state.books)
     const bookId = useSelector(state => state.currentId)
     const dispatch = useDispatch()
@@ -31,15 +31,15 @@ const PopUpMenu = ({ navigation }) => {
 
     const takePhotoFromLibrary = () => {
         ImagePicker.openPicker({
-            multiple: true,
+            width: 612,
+            height: 792,
+            multiple: false,
             mediaType: 'photo',
             cropping: true,
             cropperToolbarTitle: "Редактирование",
             freeStyleCropEnabled: true
-        }).then(async (images) => {
-            images.map((image) => {
-                dispatch(addPage(image.path))
-            })
+        }).then(async (image) => {
+            dispatch(addPage(image.path))
         })
     }
 
@@ -47,18 +47,18 @@ const PopUpMenu = ({ navigation }) => {
         const html = `
             <h1 style='font-size: 54; text-align: center; padding-top:400'>${books.find((i) => i.id == bookId).fullname}</h1>
             <h3 style='text-align: center; padding-top:400'>PDF created by TETRATKA</h3>
-        ${books.find((i) => i.id == bookId).pages.map(i => `<img style='width:100%; height:900px' src="${i}"/>`)}`
+        ${books.find((i) => i.id == bookId).pages.map(i => `<img style='width:100%; height:920px' src="${i}"/>`)}`
         const options = {
             html,
             fileName: books.find((i) => i.id == bookId).fullname,
             directory: 'Documents',
-        };
+        }
 
         let file = await RNHTMLtoPDF.convert(options)
         Share.open({
             url: 'file://' + file.filePath,
             title: 'Поделиться PDF'
-        });
+        })
     }
 
     return (

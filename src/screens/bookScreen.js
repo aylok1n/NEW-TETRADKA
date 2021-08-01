@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Pressable, Modal, Vibration, } from 'react-native';
+import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Pressable, Modal, Vibration, StyleSheet} from 'react-native';
 import styles from '../styles.js';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -14,19 +14,25 @@ function BookScreen({ navigation }) {
 	const [isVisible, setIsVisible] = React.useState(false)
 	const [modalVisible, setModalVisible] = React.useState(false)
 	const [pageNumber, setPageNumber] = React.useState(0)
-	let images = []
+	const [images, setImages] = React.useState([])
 	const id = useSelector(state => state.currentId)
 	const fullname = useSelector(state => state.books.find((i) => i.id == state.currentId).fullname)
 	const pages = useSelector(state => state.books.find((i) => i.id == state.currentId).pages)
 
 	const dispatch = useDispatch()
 
-	React.useEffect(() => {
-		images = []
-		pages.map((uri) => images.push({
-			source: { uri: uri },
+	const mapPages = () => {
+		let arr = []
+		pages.map((uri) => arr.push({
+			source: {
+				uri: uri,
+				title: pages.indexOf(uri) + '/' + pages.length,
+				width: 612,
+            	height: 792,
+			},
 		}))
-	}, [])
+		setImages(arr)
+	}
 
 	const onDelete = (page, id) => {
 		Vibration.vibrate(40)
@@ -34,6 +40,29 @@ function BookScreen({ navigation }) {
 		setPageNumber(id)
 	}
 
+	const renderFooter = () => {
+		const style = StyleSheet.create({
+			footer: {
+				height: 50,
+				flexDirection: 'row',
+				alignItems: 'center',
+				justifyContent: 'center',
+				backgroundColor: 'rgba(0, 0, 0, 0.4)',
+				paddingHorizontal: 10,
+				paddingVertical: 5,
+			},
+			footerText: {
+				fontSize: 16,
+				color: '#FFF',
+				textAlign: 'center',
+			},
+		});
+        return (
+            <View style={style.footer}>
+                <Text style={style.footerText}>{(pageNumber + 1) + '/' + pages.length}</Text>
+            </View>
+        );
+    }
 	return (
 		<Container>
 			<Modal
@@ -70,19 +99,19 @@ function BookScreen({ navigation }) {
 				<View>
 					<ImageView
 						images={images}
-						animationType={'fade'}
 						imageIndex={pageNumber}
 						isVisible={isVisible}
-						controls={{ close: true, next: false, prev: false }}
 						onClose={() => { setIsVisible(false) }}
 						isSwipeCloseEnabled={false}
-						renderFooter={() => (<View><Text>{pageNumber}/{images.length}</Text></View>)}
+						renderFooter={renderFooter}
+						onImageChange={id => setPageNumber(id)}
 					/>
 					<ScrollView>
 						<FullName numberOfLines={1} ellipsizeMode='tail'>{fullname}</FullName>
 						{pages.map((page, id,) =>
 							<View key={id}>
 								<Pressable onPress={() => {
+									mapPages()
 									setIsVisible(true)
 									setPageNumber(id)
 								}}

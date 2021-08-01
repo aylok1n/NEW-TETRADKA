@@ -6,7 +6,7 @@ import { StatusBar } from 'react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 
 import HomeScreen from './screens/HomeScreen.js'
-import BookScreen from './screens/BookScreen.js'
+import BookScreen from './screens/bookScreen.js'
 
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux'
